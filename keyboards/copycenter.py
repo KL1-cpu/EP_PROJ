@@ -81,7 +81,7 @@ def get_copycenter_main_keyboard():
 def get_files_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
-            [KeyboardButton(text="📎 Прикрепить файлы")],
+            # [KeyboardButton(text="📎 Прикрепить файлы")],
             [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True

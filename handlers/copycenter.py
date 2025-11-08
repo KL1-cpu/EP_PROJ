@@ -35,7 +35,7 @@ async def copycenter_main(message: Message, state: FSMContext):
 @router.message(F.text == "Ч/Б ПЕЧАТЬ")
 async def bw_print_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.bw_format)
-    await state.update_data(service_type="Ч/Б печать", previous_menu='copycenter')
+    await state.update_data(Услуга="Ч/Б печать", previous_menu='copycenter')
     await message.answer(
         "🖨️ Ч/Б ПЕЧАТЬ\n\n"
         "Выберите формат:",
@@ -45,7 +45,7 @@ async def bw_print_start(message: Message, state: FSMContext):
 @router.message(F.text == "ЦВЕТНАЯ ПЕЧАТЬ")
 async def color_print_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.color_format)
-    await state.update_data(service_type="Цветная печать", previous_menu='copycenter')
+    await state.update_data(Услуга="Цветная печать", previous_menu='copycenter')
     await message.answer(
         "🎨 ЦВЕТНАЯ ПЕЧАТЬ\n\n"
         "Выберите формат:",
@@ -55,7 +55,7 @@ async def color_print_start(message: Message, state: FSMContext):
 # Обработчики Ч/Б печати
 @router.message(OrderStates.bw_format, F.text.in_(["A4", "A3"]))
 async def bw_format_selected(message: Message, state: FSMContext):
-    await state.update_data(format=message.text)
+    await state.update_data(Формат=message.text)
     await state.set_state(OrderStates.bw_print_type)
     await message.answer(
         "Выберите тип печати:",
@@ -64,7 +64,7 @@ async def bw_format_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.bw_print_type, F.text.in_(["Односторонняя", "Двусторонняя", "Печать брошюры"]))
 async def bw_print_type_selected(message: Message, state: FSMContext):
-    await state.update_data(print_type=message.text)
+    await state.update_data(Тип_печати=message.text)
     await state.set_state(OrderStates.bw_additional_services)
     await message.answer(
         "Выберите дополнительные услуги:",
@@ -91,7 +91,7 @@ async def bw_additional_services_selected(message: Message, state: FSMContext):
     "A5 (148×210 мм)", "A4 (210×297 мм)", "A3 (297×420 мм)"
 ]))
 async def color_format_selected(message: Message, state: FSMContext):
-    await state.update_data(format=message.text)
+    await state.update_data(Формат=message.text)
     await state.set_state(OrderStates.color_paper_type)
     await message.answer(
         "Выберите тип бумаги:",
@@ -100,7 +100,7 @@ async def color_format_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.color_paper_type)
 async def color_paper_type_selected(message: Message, state: FSMContext):
-    await state.update_data(paper_type=message.text)
+    await state.update_data(Тип_бумаги=message.text)
     await state.set_state(OrderStates.color_print_type)
     await message.answer(
         "Выберите тип печати:",
@@ -109,7 +109,7 @@ async def color_paper_type_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.color_print_type, F.text.in_(["Односторонняя", "Двусторонняя", "Печать брошюры"]))
 async def color_print_type_selected(message: Message, state: FSMContext):
-    await state.update_data(print_type=message.text)
+    await state.update_data(Тип_печати=message.text)
     await state.set_state(OrderStates.color_additional_services)
     await message.answer(
         "Выберите дополнительные услуги:",
@@ -119,7 +119,7 @@ async def color_print_type_selected(message: Message, state: FSMContext):
 @router.message(OrderStates.color_additional_services)
 async def color_additional_services_selected(message: Message, state: FSMContext):
     if message.text != "Пропустить":
-        await state.update_data(additional_services=message.text)
+        await state.update_data(Доп_услуги=message.text)
     
     await state.set_state(OrderStates.waiting_for_quantity)
     await message.answer(
@@ -141,15 +141,15 @@ async def quantity_entered(message: Message, state: FSMContext):
     )
 
 # Обработчик файлов
-@router.message(OrderStates.waiting_for_files, F.text == "📎 Прикрепить файлы")
-async def request_files(message: Message, state: FSMContext):
-    await message.answer(
-        "Пожалуйста, прикрепите файлы (документы или изображения):",
-        reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
-            resize_keyboard=True
-        )
-    )
+# @router.message(OrderStates.waiting_for_files, F.text == "📎 Прикрепить файлы")
+# async def request_files(message: Message, state: FSMContext):
+#     await message.answer(
+#         "Пожалуйста, прикрепите файлы (документы или изображения):",
+#         reply_markup=ReplyKeyboardMarkup(
+#             keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+#             resize_keyboard=True
+#         )
+#     )
 
 @router.message(OrderStates.waiting_for_files, F.document | F.photo)
 async def files_received(message: Message, state: FSMContext):
@@ -188,14 +188,14 @@ async def comment_received(message: Message, state: FSMContext):
     
     # Переходим к подтверждению заказа
     data = await state.get_data()
-    service_type = data.get('service_type', 'Неизвестная услуга')
+    Услуга = data.get('service_type', 'Неизвестная услуга')
 
     # Краткая сводка
-    summary = create_order_summary(message.from_user.id, service_type, data, files_info=data.get('files_info', []), comment=data.get('comment'))
+    summary = create_order_summary(message.from_user.id, Услуга, data, files_info=data.get('files_info', []), comment=data.get('comment'))
 
     await state.set_state(OrderStates.waiting_for_files)  # Сброс состояния
     await message.answer(
-        f"Заказ {service_type} готов к отправке!\n\n"
+        f"Заказ {Услуга} готов к отправке!\n\n"
         f"Проверьте детали заказа и нажмите кнопку для отправки менеджеру:\n\n{summary}",
         reply_markup=get_order_confirmation_keyboard()
     )

@@ -26,7 +26,7 @@ async def polygraphy_main(message: Message, state: FSMContext):
 @router.message(F.text == "ВИЗИТКИ")
 async def business_cards_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.business_card_print_type)
-    await state.update_data(service_type="Визитки", previous_menu='polygraphy')
+    await state.update_data(Услуга="Визитки", previous_menu='polygraphy')
     await message.answer(
         "🎴 ВИЗИТКИ\n\nВыберите тип печати:",
         reply_markup=get_business_card_print_type_keyboard()
@@ -35,7 +35,7 @@ async def business_cards_start(message: Message, state: FSMContext):
 # Обработчики визиток - офсетная печать
 @router.message(OrderStates.business_card_print_type, F.text == "Офсетная")
 async def business_cards_offset_selected(message: Message, state: FSMContext):
-    await state.update_data(print_type=message.text)
+    await state.update_data(Тип=message.text)
     await state.set_state(OrderStates.business_card_offset_color)
     await message.answer(
         "Выберите цветность:",
@@ -44,7 +44,7 @@ async def business_cards_offset_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.business_card_offset_color)
 async def business_cards_offset_color_selected(message: Message, state: FSMContext):
-    await state.update_data(color=message.text)
+    await state.update_data(Цвет=message.text)
     await state.set_state(OrderStates.business_card_offset_quantity)
     await message.answer(
         "Выберите количество:",
@@ -81,7 +81,7 @@ async def business_cards_digital_paper_selected(message: Message, state: FSMCont
 
 @router.message(OrderStates.business_card_digital_color)
 async def business_cards_digital_color_selected(message: Message, state: FSMContext):
-    await state.update_data(color=message.text)
+    await state.update_data(Цвет=message.text)
     await state.set_state(OrderStates.business_card_digital_lamination)
     await message.answer(
         "Выберите ламинацию:",
@@ -110,7 +110,7 @@ async def business_cards_digital_quantity_selected(message: Message, state: FSMC
 @router.message(F.text == "БЛОКНОТЫ")
 async def notebooks_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.notebook_format)
-    await state.update_data(service_type="Блокноты", previous_menu='polygraphy')
+    await state.update_data(Услуга="Блокноты", previous_menu='polygraphy')
     await message.answer(
         "📓 БЛОКНОТЫ\n\nВыберите формат:",
         reply_markup=get_notebook_format_keyboard()
@@ -118,7 +118,7 @@ async def notebooks_start(message: Message, state: FSMContext):
 
 @router.message(OrderStates.notebook_format)
 async def notebook_format_selected(message: Message, state: FSMContext):
-    await state.update_data(format=message.text)
+    await state.update_data(Формат=message.text)
     await state.set_state(OrderStates.notebook_inner_block)
     await message.answer(
         "Выберите внутренний блок:",
@@ -127,7 +127,7 @@ async def notebook_format_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.notebook_inner_block)
 async def notebook_inner_block_selected(message: Message, state: FSMContext):
-    await state.update_data(inner_block=message.text)
+    await state.update_data(Внутренний_блок=message.text)
     await state.set_state(OrderStates.notebook_cover_type)
     await message.answer(
         "Выберите тип обложки:",
@@ -136,7 +136,7 @@ async def notebook_inner_block_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.notebook_cover_type)
 async def notebook_cover_type_selected(message: Message, state: FSMContext):
-    await state.update_data(cover_type=message.text)
+    await state.update_data(Обложка=message.text)
     await state.set_state(OrderStates.notebook_backing)
     await message.answer(
         "Выберите подложку:",
@@ -145,7 +145,7 @@ async def notebook_cover_type_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.notebook_backing)
 async def notebook_backing_selected(message: Message, state: FSMContext):
-    await state.update_data(backing=message.text)
+    await state.update_data(Подложка=message.text)
     await state.set_state(OrderStates.notebook_stitching)
     await message.answer(
         "Выберите позицию сшивания:",
@@ -154,7 +154,7 @@ async def notebook_backing_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.notebook_stitching)
 async def notebook_stitching_selected(message: Message, state: FSMContext):
-    await state.update_data(stitching=message.text)
+    await state.update_data(Позиция_сшивания=message.text)
     await state.set_state(OrderStates.notebook_pages)
     await message.answer(
         "Выберите количество страниц:",
@@ -163,7 +163,7 @@ async def notebook_stitching_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.notebook_pages)
 async def notebook_pages_selected(message: Message, state: FSMContext):
-    await state.update_data(pages=message.text)
+    await state.update_data(Страниц=message.text)
     await state.set_state(OrderStates.waiting_for_quantity)
     await message.answer(
         "Введите количество экземпляров:",
@@ -177,7 +177,7 @@ async def notebook_pages_selected(message: Message, state: FSMContext):
 @router.message(F.text == "БУКЛЕТЫ")
 async def booklets_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.booklet_format)
-    await state.update_data(service_type="Буклеты", previous_menu='polygraphy')
+    await state.update_data(Услуга="Буклеты", previous_menu='polygraphy')
     await message.answer(
         "📰 БУКЛЕТЫ\n\nВыберите формат готового изделия:",
         reply_markup=get_booklet_format_keyboard()
@@ -185,7 +185,7 @@ async def booklets_start(message: Message, state: FSMContext):
 
 @router.message(OrderStates.booklet_format)
 async def booklet_format_selected(message: Message, state: FSMContext):
-    await state.update_data(format=message.text)
+    await state.update_data(Формат=message.text)
     await state.set_state(OrderStates.booklet_paper_type)
     await message.answer(
         "Выберите тип бумаги:",
@@ -194,7 +194,7 @@ async def booklet_format_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.booklet_paper_type)
 async def booklet_paper_type_selected(message: Message, state: FSMContext):
-    await state.update_data(paper_type=message.text)
+    await state.update_data(Тип_бумаги=message.text)
     await state.set_state(OrderStates.booklet_color)
     await message.answer(
         "Выберите цветность:",
@@ -203,7 +203,7 @@ async def booklet_paper_type_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.booklet_color)
 async def booklet_color_selected(message: Message, state: FSMContext):
-    await state.update_data(color=message.text)
+    await state.update_data(Цвет=message.text)
     await state.set_state(OrderStates.booklet_fold_type)
     await message.answer(
         "Выберите тип сгиба:",
@@ -212,7 +212,7 @@ async def booklet_color_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.booklet_fold_type)
 async def booklet_fold_type_selected(message: Message, state: FSMContext):
-    await state.update_data(fold_type=message.text)
+    await state.update_data(Тип_сгиба=message.text)
     await state.set_state(OrderStates.waiting_for_quantity)
     await message.answer(
         "Введите количество экземпляров:",
@@ -226,7 +226,7 @@ async def booklet_fold_type_selected(message: Message, state: FSMContext):
 @router.message(F.text == "КАЛЕНДАРИ")
 async def calendars_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.calendar_type)
-    await state.update_data(service_type="Календари", previous_menu='polygraphy')
+    await state.update_data(Услуга="Календари", previous_menu='polygraphy')
     await message.answer(
         "📅 КАЛЕНДАРИ\n\nВыберите вид календаря:",
         reply_markup=get_calendar_type_keyboard()
@@ -234,7 +234,7 @@ async def calendars_start(message: Message, state: FSMContext):
 
 @router.message(OrderStates.calendar_type)
 async def calendar_type_selected(message: Message, state: FSMContext):
-    await state.update_data(calendar_type=message.text)
+    await state.update_data(Вид=message.text)
     await state.set_state(OrderStates.waiting_for_quantity)
     await message.answer(
         "Введите количество экземпляров:",
@@ -248,7 +248,7 @@ async def calendar_type_selected(message: Message, state: FSMContext):
 @router.message(F.text == "КОНВЕРТЫ")
 async def envelopes_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.envelope_type)
-    await state.update_data(service_type="Конверты", previous_menu='polygraphy')
+    await state.update_data(Услуга="Конверты", previous_menu='polygraphy')
     await message.answer(
         "✉️ КОНВЕРТЫ\n\nВыберите тип конверта:",
         reply_markup=get_envelope_type_keyboard()
@@ -256,7 +256,7 @@ async def envelopes_start(message: Message, state: FSMContext):
 
 @router.message(OrderStates.envelope_type)
 async def envelope_type_selected(message: Message, state: FSMContext):
-    await state.update_data(envelope_type=message.text)
+    await state.update_data(Тип_конверта=message.text)
     await state.set_state(OrderStates.waiting_for_quantity)
     await message.answer(
         "Введите количество экземпляров:",
@@ -270,7 +270,7 @@ async def envelope_type_selected(message: Message, state: FSMContext):
 @router.message(F.text == "ЛИСТОВКИ")
 async def leaflets_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.leaflet_format)
-    await state.update_data(service_type="Листовки", previous_menu='polygraphy')
+    await state.update_data(Услуга="Листовки", previous_menu='polygraphy')
     await message.answer(
         "📄 ЛИСТОВКИ\n\nВыберите формат:",
         reply_markup=get_leaflet_format_keyboard()
@@ -278,7 +278,7 @@ async def leaflets_start(message: Message, state: FSMContext):
 
 @router.message(OrderStates.leaflet_format)
 async def sticker_material_type(message: Message, state: FSMContext):
-    await state.update_data(format=message.text)
+    await state.update_data(Формат=message.text)
     await state.set_state(OrderStates.leaflet_paper_type)
     await message.answer(
         "Выберите формат печати:",
@@ -287,7 +287,7 @@ async def sticker_material_type(message: Message, state: FSMContext):
 
 @router.message(OrderStates.leaflet_paper_type)
 async def leaflet_color(message: Message, state: FSMContext):
-    await state.update_data(leaflet_paper_type=message.text)
+    await state.update_data(Формат_печати=message.text)
     await state.set_state(OrderStates.leaflet_color)
     await message.answer(
         "Выберите цветность:",
@@ -296,7 +296,7 @@ async def leaflet_color(message: Message, state: FSMContext):
 
 @router.message(OrderStates.leaflet_color)
 async def leaflet_selected(message: Message, state: FSMContext):
-    await state.update_data(leaflet_color=message.text)
+    await state.update_data(Цвет=message.text)
     await state.set_state(OrderStates.waiting_for_quantity)
     await message.answer(
         "Введите количество экземпляров:",
@@ -309,7 +309,7 @@ async def leaflet_selected(message: Message, state: FSMContext):
 @router.message(F.text == "ПЕЧАТЬ НА САМОКЛЕЙКЕ")
 async def stickers_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.sticker_material_type)
-    await state.update_data(service_type="Печать на самоклейке", previous_menu='polygraphy')
+    await state.update_data(Услуга="Печать на самоклейке", previous_menu='polygraphy')
     await message.answer(
         "🏷️ ПЕЧАТЬ НА САМОКЛЕЙКЕ\n\nВыберите тип материала:",
         reply_markup=get_sticker_material_type_keyboard()
@@ -317,7 +317,7 @@ async def stickers_start(message: Message, state: FSMContext):
 
 @router.message(OrderStates.sticker_material_type)
 async def sticker_material_type(message: Message, state: FSMContext):
-    await state.update_data(sticker_material_type=message.text)
+    await state.update_data(Материал=message.text)
     await state.set_state(OrderStates.sticker_print_format)
     await message.answer(
         "Выберите формат печати:",
@@ -326,7 +326,7 @@ async def sticker_material_type(message: Message, state: FSMContext):
 
 @router.message(OrderStates.sticker_print_format)
 async def sticker_cutting(message: Message, state: FSMContext):
-    await state.update_data(sticker_print_format=message.text)
+    await state.update_data(Формат=message.text)
     await state.set_state(OrderStates.sticker_cutting)
     await message.answer(
         "Вам нужна подрезка?:",
@@ -335,7 +335,7 @@ async def sticker_cutting(message: Message, state: FSMContext):
 
 @router.message(OrderStates.sticker_cutting)
 async def sticker_selected(message: Message, state: FSMContext):
-    await state.update_data(sticker_cutting=message.text)
+    await state.update_data(Подрез=message.text)
     await state.set_state(OrderStates.waiting_for_quantity)
     await message.answer(
         "Введите количество экземпляров:",
@@ -348,7 +348,7 @@ async def sticker_selected(message: Message, state: FSMContext):
 @router.message(F.text == "ПЛАКАТЫ")
 async def posters_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.poster_format)
-    await state.update_data(service_type="Плакаты", previous_menu='polygraphy')
+    await state.update_data(Услуга="Плакаты", previous_menu='polygraphy')
     await message.answer(
         "📊 ПЛАКАТЫ\n\nВыберите формат:",
         reply_markup=get_poster_format_keyboard()
@@ -357,7 +357,7 @@ async def posters_start(message: Message, state: FSMContext):
 @router.message(F.text == "A3 (297×420 мм) - цифровая печать")
 async def poster_paper_type_a3(message: Message, state: FSMContext):
     await state.set_state(OrderStates.poster_paper_type_a3)
-    await state.update_data(format=message.text)
+    await state.update_data(Формат=message.text)
     await message.answer(
         "Выберите тип бумаги:",
         reply_markup=get_poster_paper_type_a3_keyboard()
@@ -365,7 +365,7 @@ async def poster_paper_type_a3(message: Message, state: FSMContext):
 
 @router.message(OrderStates.poster_paper_type_a3)
 async def poster_cutting_a3(message: Message, state: FSMContext):
-    await state.update_data(poster_paper_type=message.text)
+    await state.update_data(Тип_бумаги=message.text)
     await state.set_state(OrderStates.poster_cutting_a3)
     await message.answer(
         "Вам нужна подрезка?:",
@@ -374,7 +374,7 @@ async def poster_cutting_a3(message: Message, state: FSMContext):
 
 @router.message(OrderStates.poster_cutting_a3)
 async def poster_selected(message: Message, state: FSMContext):
-    await state.update_data(poster_cutting=message.text)
+    await state.update_data(Подрез=message.text)
     await state.set_state(OrderStates.waiting_for_quantity)
     await message.answer(
         "Введите количество экземпляров:",
@@ -387,7 +387,7 @@ async def poster_selected(message: Message, state: FSMContext):
 @router.message(F.text == "A2 (420×594 мм) - интерьерная печать" or F.text == "A1 (594×841 мм) - интерьерная печать" or F.text == "A0 (841×1189 мм) - интерьерная печать")
 async def poster_paper_type_large(message: Message, state: FSMContext):
     await state.set_state(OrderStates.poster_paper_type_large)
-    await state.update_data(format=message.text)
+    await state.update_data(Формат=message.text)
     await message.answer(
         "Выберите тип бумаги:",
         reply_markup=get_poster_paper_type_large_keyboard()
@@ -395,7 +395,7 @@ async def poster_paper_type_large(message: Message, state: FSMContext):
 
 @router.message(OrderStates.poster_paper_type_large)
 async def poster_cutting_large(message: Message, state: FSMContext):
-    await state.update_data(poster_paper_type=message.text)
+    await state.update_data(Тип_бумаги=message.text)
     await state.set_state(OrderStates.poster_cutting_large)
     await message.answer(
         "Вам нужна подрезка?:",
@@ -404,7 +404,7 @@ async def poster_cutting_large(message: Message, state: FSMContext):
 
 @router.message(OrderStates.poster_cutting_large)
 async def posters_selected_2(message: Message, state: FSMContext):
-    await state.update_data(poster_cutting=message.text)
+    await state.update_data(Подрез=message.text)
     await state.set_state(OrderStates.waiting_for_quantity)
     await message.answer(
         "Введите количество экземпляров:",
@@ -417,7 +417,7 @@ async def posters_selected_2(message: Message, state: FSMContext):
 @router.message(F.text == "СЕРТИФИКАТЫ")
 async def certificates_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.certificate_format)
-    await state.update_data(service_type="Сертификаты", previous_menu='polygraphy')
+    await state.update_data(Услуга="Сертификаты", previous_menu='polygraphy')
     await message.answer(
         "🏆 СЕРТИФИКАТЫ\n\nВыберите формат:",
         reply_markup=get_certificate_format_keyboard()
@@ -425,7 +425,7 @@ async def certificates_start(message: Message, state: FSMContext):
 
 @router.message(OrderStates.certificate_format)
 async def certificates_paper_type(message: Message, state: FSMContext):
-    await state.update_data(format=message.text)
+    await state.update_data(Формат=message.text)
     await state.set_state(OrderStates.certificate_paper_type)
     await message.answer(
         "Выберите тип бумаги:",
@@ -434,7 +434,7 @@ async def certificates_paper_type(message: Message, state: FSMContext):
 
 @router.message(OrderStates.certificate_paper_type)
 async def certificates_color(message: Message, state: FSMContext):
-    await state.update_data(certificate_type=message.text)
+    await state.update_data(Тип_бумаги=message.text)
     await state.set_state(OrderStates.certificate_color)
     await message.answer(
         "Выберите цветность бумаги:",
@@ -452,7 +452,7 @@ async def certificates_lamination(message: Message, state: FSMContext):
 
 @router.message(OrderStates.certificate_lamination)
 async def certificates_selected(message: Message, state: FSMContext):
-    await state.update_data(certificate_lamination=message.text)
+    await state.update_data(Ламинация=message.text)
     await state.set_state(OrderStates.waiting_for_quantity)
     await message.answer(
         "Введите количество экземпляров:",
@@ -465,7 +465,7 @@ async def certificates_selected(message: Message, state: FSMContext):
 @router.message(F.text == "СТИКЕРЫ С ПЛОТТЕРНОЙ РЕЗКОЙ")
 async def sticker_packs_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.sticker_pack_material)
-    await state.update_data(service_type="Стикеры с плоттерной резкой", previous_menu='polygraphy')
+    await state.update_data(Услуга="Стикеры с плоттерной резкой", previous_menu='polygraphy')
     await message.answer(
         "🔖 СТИКЕРЫ С ПЛОТТЕРНОЙ РЕЗКОЙ\n\nВыберите тип материала:",
         reply_markup=get_sticker_pack_material_keyboard()
@@ -473,7 +473,7 @@ async def sticker_packs_start(message: Message, state: FSMContext):
 
 @router.message(OrderStates.sticker_pack_material)
 async def sticker_pack_format(message: Message, state: FSMContext):
-    await state.update_data(format=message.text)
+    await state.update_data(Формат=message.text)
     await state.set_state(OrderStates.sticker_pack_format)
     await message.answer(
         "Выберите формат материала:",
@@ -482,7 +482,7 @@ async def sticker_pack_format(message: Message, state: FSMContext):
 
 @router.message(OrderStates.sticker_pack_format)
 async def sticker_pack_color(message: Message, state: FSMContext):
-    await state.update_data(format=message.text)
+    await state.update_data(Формат=message.text)
     await state.set_state(OrderStates.sticker_pack_color)
     await message.answer(
         "Выберите цветность печати:",
@@ -491,7 +491,7 @@ async def sticker_pack_color(message: Message, state: FSMContext):
 
 @router.message(OrderStates.sticker_pack_color)
 async def sticker_pack_cutting(message: Message, state: FSMContext):
-    await state.update_data(format=message.text)
+    await state.update_data(Формат=message.text)
     await state.set_state(OrderStates.sticker_pack_cutting)
     await message.answer(
         "Вам нужна нарезка на плоттере?:",
@@ -500,7 +500,7 @@ async def sticker_pack_cutting(message: Message, state: FSMContext):
 
 @router.message(OrderStates.sticker_pack_cutting)
 async def sticker_pack_type_selected(message: Message, state: FSMContext):
-    await state.update_data(sticker_pack_cutting=message.text)
+    await state.update_data(Нарезка=message.text)
     await state.set_state(OrderStates.waiting_for_quantity)
     await message.answer(
         "Введите количество экземпляров:",
@@ -510,36 +510,33 @@ async def sticker_pack_type_selected(message: Message, state: FSMContext):
         )
     )
 
-@router.message(F.text == "✅ Отправить заказ-подтверждение")
-async def confirm_order(message: Message, state: FSMContext):
-    data = await state.get_data()
+# @router.message(F.text == "✅ Отправить заказ-подтверждение")
+# async def confirm_order(message: Message, state: FSMContext):
+#     data = await state.get_data()
     
-    order_message = create_order_message(
-        username=message.from_user.username,
-        user_id=message.from_user.id,
-        service_type=data.get('service_type', 'Неизвестная услуга'),
-        order_data=data,
-        files_info=data.get('files_info', []),
-        comment=data.get('comment')
-    )
+#     order_message = create_order_message(
+#         order_data=data,
+#         files_info=data.get('files_info', []),
+#         comment=data.get('comment')
+#     )
     
-    success = await send_order_to_manager(message.bot, order_message)
+#     success = await send_order_to_manager(message.bot, order_message)
     
-    # Скрываем старую клавиатуру и показываем inline-меню
-    await message.answer("Клавиатура скрыта.", reply_markup=ReplyKeyboardRemove())
-    await message.answer("Вот ваш заказ (копия):")
-    await message.answer(order_message)
+#     # Скрываем старую клавиатуру и показываем inline-меню
+#     await message.answer("Клавиатура скрыта.", reply_markup=ReplyKeyboardRemove())
+#     await message.answer("Вот ваш заказ (копия):")
+#     await message.answer(order_message)
     
-    if success:
-        await message.answer(
-            "✅ Ваш заказ успешно отправлен менеджеру!\n"
-            "С вами свяжутся в ближайшее время для уточнения деталей.",
-            reply_markup=get_main_menu_keyboard()
-        )
-    else:
-        await message.answer(
-            "❌ Произошла ошибка при отправке заказа. Пожалуйста, попробуйте позже.",
-            reply_markup=get_main_menu_keyboard()
-        )
+#     if success:
+#         await message.answer(
+#             "✅ Ваш заказ успешно отправлен менеджеру!\n"
+#             "С вами свяжутся в ближайшее время для уточнения деталей.",
+#             reply_markup=get_main_menu_keyboard()
+#         )
+#     else:
+#         await message.answer(
+#             "❌ Произошла ошибка при отправке заказа. Пожалуйста, попробуйте позже.",
+#             reply_markup=get_main_menu_keyboard()
+#         )
     
-    await state.clear()
+#     await state.clear()

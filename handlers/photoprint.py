@@ -13,7 +13,7 @@ router = Router()
 @router.message(F.text == "📸 ФОТОПЕЧАТЬ")
 async def photoprint_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.photo_format)
-    await state.update_data(service_type="Фотопечать", previous_menu='main')
+    await state.update_data(Услуга="Фотопечать", previous_menu='main')
     
     info_text = (
         "📸 ФОТОПЕЧАТЬ\ n\n"
@@ -25,7 +25,7 @@ async def photoprint_start(message: Message, state: FSMContext):
 
 @router.message(OrderStates.photo_format)
 async def photo_format_selected(message: Message, state: FSMContext):
-    await state.update_data(format=message.text)
+    await state.update_data(Формат=message.text)
     await state.set_state(OrderStates.photo_print_type)
     await message.answer(
         "Выберите тип печати фото:",
@@ -34,7 +34,7 @@ async def photo_format_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.photo_print_type)
 async def photo_print_type_selected(message: Message, state: FSMContext):
-    await state.update_data(print_type=message.text)
+    await state.update_data(Тип_печати=message.text)
     await state.set_state(OrderStates.waiting_for_quantity)
     await message.answer(
         "Введите количество экземпляров:",

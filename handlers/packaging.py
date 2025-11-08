@@ -24,7 +24,7 @@ async def packaging_main(message: Message, state: FSMContext):
 @router.message(F.text == "ПАКЕТЫ")
 async def bags_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.bag_type)
-    await state.update_data(service_type="Пакеты", previous_menu='packaging')
+    await state.update_data(Услуга="Пакеты", previous_menu='packaging')
     await message.answer(
         "🛍️ ПАКЕТЫ\n\nВыберите тип пакета:",
         reply_markup=get_bag_type_keyboard()
@@ -33,7 +33,7 @@ async def bags_start(message: Message, state: FSMContext):
 # Обработчики бумажных пакетов
 @router.message(OrderStates.bag_type, F.text == "Бумажные пакеты")
 async def paper_bags_selected(message: Message, state: FSMContext):
-    await state.update_data(bag_type=message.text)
+    await state.update_data(Услуга=message.text)
     await state.set_state(OrderStates.bag_paper_print)
     await message.answer(
         "Выберите тип печати:",
@@ -42,7 +42,7 @@ async def paper_bags_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.bag_paper_print)
 async def paper_bags_print_selected(message: Message, state: FSMContext):
-    await state.update_data(print_type=message.text)
+    await state.update_data(Тип_печати=message.text)
     await state.set_state(OrderStates.bag_paper_format)
     await message.answer(
         "Выберите формат пакета:",
@@ -51,7 +51,7 @@ async def paper_bags_print_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.bag_paper_format)
 async def paper_bags_format_selected(message: Message, state: FSMContext):
-    await state.update_data(format=message.text)
+    await state.update_data(Формат=message.text)
     await state.set_state(OrderStates.bag_paper_lamination)
     await message.answer(
         "Выберите ламинированное покрытие:",
@@ -60,7 +60,7 @@ async def paper_bags_format_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.bag_paper_lamination)
 async def paper_bags_lamination_selected(message: Message, state: FSMContext):
-    await state.update_data(lamination=message.text)
+    await state.update_data(Ламинация=message.text)
     await state.set_state(OrderStates.bag_paper_grommets)
     await message.answer(
         "Выберите люверсы:",
@@ -69,7 +69,7 @@ async def paper_bags_lamination_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.bag_paper_grommets)
 async def paper_bags_grommets_selected(message: Message, state: FSMContext):
-    await state.update_data(grommets=message.text)
+    await state.update_data(Люверсы=message.text)
     await state.set_state(OrderStates.bag_paper_handle)
     await message.answer(
         "Выберите ручку-шнурок:",
@@ -78,7 +78,7 @@ async def paper_bags_grommets_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.bag_paper_handle)
 async def paper_bags_handle_selected(message: Message, state: FSMContext):
-    await state.update_data(handle=message.text)
+    await state.update_data(Ручка=message.text)
     await state.set_state(OrderStates.waiting_for_quantity)
     await message.answer(
         "Введите количество экземпляров:",
@@ -91,7 +91,7 @@ async def paper_bags_handle_selected(message: Message, state: FSMContext):
 # Обработчики ПВД пакетов
 @router.message(OrderStates.bag_type, F.text == "ПВД пакеты")
 async def pvd_bags_selected(message: Message, state: FSMContext):
-    await state.update_data(bag_type=message.text)
+    await state.update_data(Услуга=message.text)
     await state.set_state(OrderStates.bag_pvd_print)
     await message.answer(
         "Выберите печать:",
@@ -100,7 +100,7 @@ async def pvd_bags_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.bag_pvd_print)
 async def pvd_bags_print_selected(message: Message, state: FSMContext):
-    await state.update_data(print_type=message.text)
+    await state.update_data(Тип_печати=message.text)
     await state.set_state(OrderStates.bag_pvd_format)
     await message.answer(
         "Выберите формат:",
@@ -109,7 +109,7 @@ async def pvd_bags_print_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.bag_pvd_format)
 async def pvd_bags_format_selected(message: Message, state: FSMContext):
-    await state.update_data(format=message.text)
+    await state.update_data(Формат=message.text)
     await state.set_state(OrderStates.waiting_for_quantity)
     await message.answer(
         "Введите количество экземпляров:",
@@ -123,7 +123,7 @@ async def pvd_bags_format_selected(message: Message, state: FSMContext):
 @router.message(F.text == "КОРОБКИ")
 async def boxes_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.box_material)
-    await state.update_data(service_type="Коробки", previous_menu='packaging')
+    await state.update_data(Услуга="Коробки", previous_menu='packaging')
     await message.answer(
         "📦 КОРОБКИ\n\nВыберите материал коробки:",
         reply_markup=get_box_material_keyboard()
@@ -132,7 +132,7 @@ async def boxes_start(message: Message, state: FSMContext):
 # Обработчики коробок из мелованного картона
 @router.message(OrderStates.box_material, F.text == "Коробки из мелованного картона")
 async def cardboard_boxes_selected(message: Message, state: FSMContext):
-    await state.update_data(material=message.text)
+    await state.update_data(Материал=message.text)
     await state.set_state(OrderStates.box_cardboard_size)
     await message.answer(
         "Введите размеры коробки в формате Д×Ш×В (мм):",
@@ -144,7 +144,7 @@ async def cardboard_boxes_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.box_cardboard_size)
 async def cardboard_boxes_size_entered(message: Message, state: FSMContext):
-    await state.update_data(size=message.text)
+    await state.update_data(Размер=message.text)
     await state.set_state(OrderStates.box_cardboard_print)
     await message.answer(
         "Выберите печать на коробке:",
@@ -153,7 +153,7 @@ async def cardboard_boxes_size_entered(message: Message, state: FSMContext):
 
 @router.message(OrderStates.box_cardboard_print)
 async def cardboard_boxes_print_selected(message: Message, state: FSMContext):
-    await state.update_data(print=message.text)
+    await state.update_data(Печать=message.text)
     await state.set_state(OrderStates.box_cardboard_lamination)
     await message.answer(
         "Выберите ламинированное покрытие:",
@@ -162,7 +162,7 @@ async def cardboard_boxes_print_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.box_cardboard_lamination)
 async def cardboard_boxes_lamination_selected(message: Message, state: FSMContext):
-    await state.update_data(lamination=message.text)
+    await state.update_data(Ламинирование=message.text)
     await state.set_state(OrderStates.waiting_for_quantity)
     await message.answer(
         "Введите количество экземпляров:",
@@ -175,7 +175,7 @@ async def cardboard_boxes_lamination_selected(message: Message, state: FSMContex
 # Обработчики коробок из микро-гофры
 @router.message(OrderStates.box_material, F.text == "Коробки из микро-гофры")
 async def corrugated_boxes_selected(message: Message, state: FSMContext):
-    await state.update_data(material=message.text)
+    await state.update_data(Материал=message.text)
     await state.set_state(OrderStates.box_corrugated_format)
     await message.answer(
         "Выберите формат коробки:",
@@ -184,7 +184,7 @@ async def corrugated_boxes_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.box_corrugated_format)
 async def corrugated_boxes_format_selected(message: Message, state: FSMContext):
-    await state.update_data(format=message.text)
+    await state.update_data(Формат=message.text)
     await state.set_state(OrderStates.box_corrugated_color)
     await message.answer(
         "Выберите цвет микрогофры:",
@@ -193,7 +193,7 @@ async def corrugated_boxes_format_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.box_corrugated_color)
 async def corrugated_boxes_color_selected(message: Message, state: FSMContext):
-    await state.update_data(color=message.text)
+    await state.update_data(Цвет=message.text)
     await state.set_state(OrderStates.box_corrugated_logo)
     await message.answer(
         "Выберите нанесение логотипа:",
@@ -202,7 +202,7 @@ async def corrugated_boxes_color_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.box_corrugated_logo)
 async def corrugated_boxes_logo_selected(message: Message, state: FSMContext):
-    await state.update_data(logo=message.text)
+    await state.update_data(Логотип=message.text)
     await state.set_state(OrderStates.waiting_for_quantity)
     await message.answer(
         "Введите количество экземпляров:",

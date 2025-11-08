@@ -64,15 +64,15 @@ def create_order_summary(user_id: int, service_type: str, order_data: dict, file
 		lines.append(f"Клиент: {first_name or '-'} {last_name or '-'}")
 	if phone:
 		lines.append(f"Телефон: {phone}")
-	lines.append(f"Услуга: {service_type}")
+	# lines.append(f"Услуга: {service_type}")
 	# Перечислим только значимые поля из order_data
 	for key, value in order_data.items():
 		if value and value != "Пропустить" and key not in ['files_info', 'previous_menu', 'files_data']:
 			formatted_key = key.replace('_', ' ').title()
 			lines.append(f"{formatted_key}: {value}")
 	# Файлы — просто кол-во, если есть
-	if files_info:
-		lines.append(f"Файлы: {len(files_info)}")
+	# if files_info:
+	# 	lines.append(f"Файлы: {len(files_info)}")
 	# Примечание кратко
 	if comment and comment != "Пропустить":
 		lines.append(f"Примечание: {comment}")

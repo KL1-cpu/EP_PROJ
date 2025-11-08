@@ -13,7 +13,7 @@ router = Router()
 @router.message(F.text == "🏢 ИЗГОТОВЛЕНИЕ ПЕЧАТЕЙ И ШТАМПОВ")
 async def stamps_main(message: Message, state: FSMContext):
     await state.set_state(OrderStates.stamp_type)
-    await state.update_data(service_type="Изготовление печатей и штампов", previous_menu='main')
+    await state.update_data(Услуга="Изготовление печатей и штампов", previous_menu='main')
     
     info_text = (
         "🖋️ ИЗГОТОВЛЕНИЕ ПЕЧАТЕЙ И ШТАМПОВ\n\n"
@@ -29,7 +29,7 @@ async def stamps_main(message: Message, state: FSMContext):
 
 @router.message(OrderStates.stamp_type)
 async def stamp_type_selected(message: Message, state: FSMContext):
-    await state.update_data(stamp_type=message.text)
+    await state.update_data(Тип=message.text)
     await state.set_state(OrderStates.stamp_format)
     await message.answer(
         "Выберите формат печати:",
@@ -38,7 +38,7 @@ async def stamp_type_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.stamp_format)
 async def stamp_format_selected(message: Message, state: FSMContext):
-    await state.update_data(format=message.text)
+    await state.update_data(Формат=message.text)
     await state.set_state(OrderStates.stamp_ink_color)
     await message.answer(
         "Выберите цвет штемпельной подушки:",
@@ -47,7 +47,7 @@ async def stamp_format_selected(message: Message, state: FSMContext):
 
 @router.message(OrderStates.stamp_ink_color)
 async def stamp_ink_color_selected(message: Message, state: FSMContext):
-    await state.update_data(ink_color=message.text)
+    await state.update_data(Цвет=message.text)
     await state.set_state(OrderStates.waiting_for_quantity)
     await message.answer(
         "Введите количество экземпляров:",

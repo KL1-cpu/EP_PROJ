@@ -83,22 +83,22 @@ async def main_menu(message: Message, state: FSMContext):
 
 @router.message(OrderStates.waiting_for_quantity, F.text.regexp(r'^\d+$'))
 async def quantity_entered(message: Message, state: FSMContext):
-    await state.update_data(quantity=message.text)
+    await state.update_data(Количество=message.text)
     await state.set_state(OrderStates.waiting_for_files)
     await message.answer(
         "Теперь прикрепите файлы:",
         reply_markup=get_files_keyboard()
     )
 
-@router.message(OrderStates.waiting_for_files, F.text == "📎 Прикрепить файлы")
-async def request_files(message: Message, state: FSMContext):
-    await message.answer(
-        "Пожалуйста, прикрепите файлы (документы или изображения):",
-        reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
-            resize_keyboard=True
-        )
-    )
+# @router.message(OrderStates.waiting_for_files, F.text == "📎 Прикрепить файлы")
+# async def request_files(message: Message, state: FSMContext):
+#     await message.answer(
+#         "Пожалуйста, прикрепите файлы (документы или изображения):",
+#         reply_markup=ReplyKeyboardMarkup(
+#             keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
+#             resize_keyboard=True
+#         )
+#     )
 
 @router.message(OrderStates.waiting_for_files, F.document | F.photo)
 async def files_received(message: Message, state: FSMContext):
@@ -165,7 +165,7 @@ async def comment_received(message: Message, state: FSMContext):
 	summary = create_order_summary(message.from_user.id, service_type, data, files_info=data.get('files_info', []), comment=data.get('comment'))
 	
 	await message.answer(
-		f"Заказ {service_type} готов к отправке!\n\n"
+		f"Заказ готов к отправке!\n\n"
 		f"Проверьте детали заказа и нажмите кнопку для отправки менеджеру:\n\n{summary}",
 		reply_markup=get_order_confirmation_keyboard()
 	)
@@ -180,7 +180,7 @@ async def skip_comment(message: Message, state: FSMContext):
 	summary = create_order_summary(message.from_user.id, service_type, data, files_info=data.get('files_info', []), comment=data.get('comment'))
 
 	await message.answer(
-		f"Заказ {service_type} готов к отправке!\n\n"
+		f"Заказ готов к отправке!\n\n"
 		f"Проверьте детали заказа и нажмите кнопку для отправки менеджеру:\n\n{summary}",
 		reply_markup=get_order_confirmation_keyboard()
 	)
