@@ -298,6 +298,7 @@ def get_certificate_format_keyboard():
         resize_keyboard=True
     )
 
+
 def get_certificate_paper_type_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
@@ -320,7 +321,6 @@ def get_certificate_lamination_keyboard():
 def get_sticker_pack_material_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
-            [KeyboardButton(text="Бумага самоклеющаяся матовая")],
             [KeyboardButton(text="Пленка белая мат."), KeyboardButton(text="Пленка белая гл.")],
             [KeyboardButton(text="Пленка прозрач. мат."), KeyboardButton(text="Пленка прозрач. гл.")],
             [KeyboardButton(text="🏠 Главное меню")]
@@ -342,6 +342,16 @@ def get_sticker_pack_color_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="4+0 (односторонняя)")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+def get_sticker_pack_cut_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Да (включена в стоимость)")],
+            [KeyboardButton(text="Нет (только печать)")],
             [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True

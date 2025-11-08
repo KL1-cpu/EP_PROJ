@@ -276,6 +276,36 @@ async def leaflets_start(message: Message, state: FSMContext):
         reply_markup=get_leaflet_format_keyboard()
     )
 
+@router.message(OrderStates.leaflet_format)
+async def sticker_material_type(message: Message, state: FSMContext):
+    await state.update_data(format=message.text)
+    await state.set_state(OrderStates.leaflet_paper_type)
+    await message.answer(
+        "Выберите формат печати:",
+        reply_markup=get_leaflet_paper_type_keyboard()
+    )
+
+@router.message(OrderStates.leaflet_paper_type)
+async def leaflet_color(message: Message, state: FSMContext):
+    await state.update_data(leaflet_paper_type=message.text)
+    await state.set_state(OrderStates.leaflet_color)
+    await message.answer(
+        "Выберите цветность:",
+        reply_markup=get_business_card_offset_color_keyboard()  # Та же клавиатура
+    )
+
+@router.message(OrderStates.leaflet_color)
+async def leaflet_selected(message: Message, state: FSMContext):
+    await state.update_data(leaflet_color=message.text)
+    await state.set_state(OrderStates.waiting_for_quantity)
+    await message.answer(
+        "Введите количество экземпляров:",
+        reply_markup=ReplyKeyboardMarkup(
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
+            resize_keyboard=True
+        )
+    )
+
 @router.message(F.text == "ПЕЧАТЬ НА САМОКЛЕЙКЕ")
 async def stickers_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.sticker_material_type)
@@ -283,6 +313,36 @@ async def stickers_start(message: Message, state: FSMContext):
     await message.answer(
         "🏷️ ПЕЧАТЬ НА САМОКЛЕЙКЕ\n\nВыберите тип материала:",
         reply_markup=get_sticker_material_type_keyboard()
+    )
+
+@router.message(OrderStates.sticker_material_type)
+async def sticker_material_type(message: Message, state: FSMContext):
+    await state.update_data(sticker_material_type=message.text)
+    await state.set_state(OrderStates.sticker_print_format)
+    await message.answer(
+        "Выберите формат печати:",
+        reply_markup=get_sticker_print_format_keyboard()
+    )
+
+@router.message(OrderStates.sticker_print_format)
+async def sticker_cutting(message: Message, state: FSMContext):
+    await state.update_data(sticker_print_format=message.text)
+    await state.set_state(OrderStates.sticker_cutting)
+    await message.answer(
+        "Вам нужна подрезка?:",
+        reply_markup=get_sticker_cutting_keyboard()
+    )
+
+@router.message(OrderStates.sticker_cutting)
+async def sticker_selected(message: Message, state: FSMContext):
+    await state.update_data(sticker_cutting=message.text)
+    await state.set_state(OrderStates.waiting_for_quantity)
+    await message.answer(
+        "Введите количество экземпляров:",
+        reply_markup=ReplyKeyboardMarkup(
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
+            resize_keyboard=True
+        )
     )
 
 @router.message(F.text == "ПЛАКАТЫ")
@@ -294,6 +354,66 @@ async def posters_start(message: Message, state: FSMContext):
         reply_markup=get_poster_format_keyboard()
     )
 
+@router.message(F.text == "A3 (297×420 мм) - цифровая печать")
+async def poster_paper_type_a3(message: Message, state: FSMContext):
+    await state.set_state(OrderStates.poster_paper_type_a3)
+    await state.update_data(format=message.text)
+    await message.answer(
+        "Выберите тип бумаги:",
+        reply_markup=get_poster_paper_type_a3_keyboard()
+    )
+
+@router.message(OrderStates.poster_paper_type_a3)
+async def poster_cutting_a3(message: Message, state: FSMContext):
+    await state.update_data(poster_paper_type=message.text)
+    await state.set_state(OrderStates.poster_cutting_a3)
+    await message.answer(
+        "Вам нужна подрезка?:",
+        reply_markup=get_poster_cutting_keyboard()
+    )
+
+@router.message(OrderStates.poster_cutting_a3)
+async def poster_selected(message: Message, state: FSMContext):
+    await state.update_data(poster_cutting=message.text)
+    await state.set_state(OrderStates.waiting_for_quantity)
+    await message.answer(
+        "Введите количество экземпляров:",
+        reply_markup=ReplyKeyboardMarkup(
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
+            resize_keyboard=True
+        )
+    )
+
+@router.message(F.text == "A2 (420×594 мм) - интерьерная печать" or F.text == "A1 (594×841 мм) - интерьерная печать" or F.text == "A0 (841×1189 мм) - интерьерная печать")
+async def poster_paper_type_large(message: Message, state: FSMContext):
+    await state.set_state(OrderStates.poster_paper_type_large)
+    await state.update_data(format=message.text)
+    await message.answer(
+        "Выберите тип бумаги:",
+        reply_markup=get_poster_paper_type_large_keyboard()
+    )
+
+@router.message(OrderStates.poster_paper_type_large)
+async def poster_cutting_large(message: Message, state: FSMContext):
+    await state.update_data(poster_paper_type=message.text)
+    await state.set_state(OrderStates.poster_cutting_large)
+    await message.answer(
+        "Вам нужна подрезка?:",
+        reply_markup=get_poster_cutting_keyboard()
+    )
+
+@router.message(OrderStates.poster_cutting_large)
+async def posters_selected_2(message: Message, state: FSMContext):
+    await state.update_data(poster_cutting=message.text)
+    await state.set_state(OrderStates.waiting_for_quantity)
+    await message.answer(
+        "Введите количество экземпляров:",
+        reply_markup=ReplyKeyboardMarkup(
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
+            resize_keyboard=True
+        )
+    )
+
 @router.message(F.text == "СЕРТИФИКАТЫ")
 async def certificates_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.certificate_format)
@@ -303,6 +423,45 @@ async def certificates_start(message: Message, state: FSMContext):
         reply_markup=get_certificate_format_keyboard()
     )
 
+@router.message(OrderStates.certificate_format)
+async def certificates_paper_type(message: Message, state: FSMContext):
+    await state.update_data(format=message.text)
+    await state.set_state(OrderStates.certificate_paper_type)
+    await message.answer(
+        "Выберите тип бумаги:",
+        reply_markup=get_certificate_paper_type_keyboard()
+    )
+
+@router.message(OrderStates.certificate_paper_type)
+async def certificates_color(message: Message, state: FSMContext):
+    await state.update_data(certificate_type=message.text)
+    await state.set_state(OrderStates.certificate_color)
+    await message.answer(
+        "Выберите цветность бумаги:",
+        reply_markup=get_booklet_color_keyboard()
+    )
+
+@router.message(OrderStates.certificate_color)
+async def certificates_lamination(message: Message, state: FSMContext):
+    await state.update_data(Цветность=message.text)
+    await state.set_state(OrderStates.certificate_lamination)
+    await message.answer(
+        "Выберите ламинацию:",
+        reply_markup=get_certificate_lamination_keyboard()
+    )
+
+@router.message(OrderStates.certificate_lamination)
+async def certificates_selected(message: Message, state: FSMContext):
+    await state.update_data(certificate_lamination=message.text)
+    await state.set_state(OrderStates.waiting_for_quantity)
+    await message.answer(
+        "Введите количество экземпляров:",
+        reply_markup=ReplyKeyboardMarkup(
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
+            resize_keyboard=True
+        )
+    )
+
 @router.message(F.text == "СТИКЕРЫ С ПЛОТТЕРНОЙ РЕЗКОЙ")
 async def sticker_packs_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.sticker_pack_material)
@@ -310,6 +469,45 @@ async def sticker_packs_start(message: Message, state: FSMContext):
     await message.answer(
         "🔖 СТИКЕРЫ С ПЛОТТЕРНОЙ РЕЗКОЙ\n\nВыберите тип материала:",
         reply_markup=get_sticker_pack_material_keyboard()
+    )
+
+@router.message(OrderStates.sticker_pack_material)
+async def sticker_pack_format(message: Message, state: FSMContext):
+    await state.update_data(format=message.text)
+    await state.set_state(OrderStates.sticker_pack_format)
+    await message.answer(
+        "Выберите формат материала:",
+        reply_markup=get_sticker_pack_format_keyboard()
+    )
+
+@router.message(OrderStates.sticker_pack_format)
+async def sticker_pack_color(message: Message, state: FSMContext):
+    await state.update_data(format=message.text)
+    await state.set_state(OrderStates.sticker_pack_color)
+    await message.answer(
+        "Выберите цветность печати:",
+        reply_markup=get_sticker_pack_color_keyboard()
+    )
+
+@router.message(OrderStates.sticker_pack_color)
+async def sticker_pack_cutting(message: Message, state: FSMContext):
+    await state.update_data(format=message.text)
+    await state.set_state(OrderStates.sticker_pack_cutting)
+    await message.answer(
+        "Вам нужна нарезка на плоттере?:",
+        reply_markup=get_sticker_pack_cut_keyboard()
+    )
+
+@router.message(OrderStates.sticker_pack_cutting)
+async def sticker_pack_type_selected(message: Message, state: FSMContext):
+    await state.update_data(sticker_pack_cutting=message.text)
+    await state.set_state(OrderStates.waiting_for_quantity)
+    await message.answer(
+        "Введите количество экземпляров:",
+        reply_markup=ReplyKeyboardMarkup(
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
+            resize_keyboard=True
+        )
     )
 
 @router.message(F.text == "✅ Отправить заказ-подтверждение")

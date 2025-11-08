@@ -31,14 +31,14 @@ def get_pen_color_keyboard():
         resize_keyboard=True
     )
 
-# def get_pen_application_keyboard():
-#     return ReplyKeyboardMarkup(
-#         keyboard=[
-#             [KeyboardButton(text="Лазерная гравировка"), KeyboardButton(text="УФ-печать")],
-#             [KeyboardButton(text="🏠 Главное меню")]
-#         ],
-#         resize_keyboard=True
-#     )
+def get_pen_application_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Лазерная гравировка"), KeyboardButton(text="УФ-печать")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
 
 # Футболки
 def get_tshirt_size_keyboard():

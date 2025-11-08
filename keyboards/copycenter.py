@@ -26,8 +26,7 @@ def get_bw_additional_services_keyboard():
             [KeyboardButton(text="Брошюровка на металлическую пружину")],
             [KeyboardButton(text="Пластиковые обложки")],
             [KeyboardButton(text="Скрепление брошюры")],
-            [KeyboardButton(text="Пропустить")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="Пропустить")]
         ],
         resize_keyboard=True
     )
@@ -38,8 +37,7 @@ def get_color_format_keyboard():
         keyboard=[
             [KeyboardButton(text="A7 (74×105 мм)"), KeyboardButton(text="A6 (105×148 мм)")],
             [KeyboardButton(text="Евроформат (210×99 мм)"), KeyboardButton(text="A5 (148×210 мм)")],
-            [KeyboardButton(text="A4 (210×297 мм)"), KeyboardButton(text="A3 (297×420 мм)")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="A4 (210×297 мм)"), KeyboardButton(text="A3 (297×420 мм)")]
         ],
         resize_keyboard=True
     )
@@ -51,10 +49,8 @@ def get_color_paper_type_keyboard():
             [KeyboardButton(text="Мелованная 115 г/м²"), KeyboardButton(text="Мелованная 130 г/м²")],
             [KeyboardButton(text="Мелованная 170 г/м²"), KeyboardButton(text="Мелованная 250 г/м²")],
             [KeyboardButton(text="Мелованная 300 г/м²")],
-            [KeyboardButton(text="Бумага самоклеющаяся матовая")],
-            [KeyboardButton(text="Плёнка самоклеющаяся белая матовая"), KeyboardButton(text="Плёнка самоклеющаяся белая глянцевая")],
-            [KeyboardButton(text="Плёнка самоклеющаяся прозрачная матовая"), KeyboardButton(text="Плёнка самоклеющаяся прозрачная глянцевая")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="Пленка белая мат."), KeyboardButton(text="Пленка белая гл.")],
+            [KeyboardButton(text="Пленка прозрач. мат."), KeyboardButton(text="Пленка прозрач. гл.")],
         ],
         resize_keyboard=True
     )
@@ -67,7 +63,7 @@ def get_color_additional_services_keyboard():
             [KeyboardButton(text="Скрепление брошюры")],
             [KeyboardButton(text="Подрезка")],
             [KeyboardButton(text="Пропустить")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )

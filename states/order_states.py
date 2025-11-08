@@ -200,7 +200,6 @@ async def files_received(message: Message, state: FSMContext):
         "Можете прикрепить еще файлы или перейти к следующему шагу.",
         reply_markup=ReplyKeyboardMarkup(
             keyboard=[
-                [KeyboardButton(text="📎 Прикрепить еще файлы")],
                 [KeyboardButton(text="📝 Добавить примечание")],
                 [KeyboardButton(text="✅ Отправить заказ-подтверждение")],
                 [KeyboardButton(text="🏠 Главное меню")]
