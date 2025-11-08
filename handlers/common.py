@@ -1,5 +1,5 @@
 from aiogram import Router, F
-from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, CallbackQuery  # add CallbackQuery
+from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, CallbackQuery, ReplyKeyboardRemove
 from aiogram.fsm.context import FSMContext
 from aiogram.filters import Command
 
@@ -16,7 +16,8 @@ async def cmd_start(message: Message, state: FSMContext):
     await state.clear()
     user = get_user_info(message.from_user.id)
     if user:
-        # Уже зарегистрирован — показать главное меню
+        # Убираем старую клавиатуру, затем показываем inline-меню
+        await message.answer("Клавиатура скрыта.", reply_markup=ReplyKeyboardRemove())
         await message.answer(
             "Привет! Я твой личный помощник Лия!\n"
             "Данные пользователя сохранены. Выберите раздел:",
@@ -73,26 +74,12 @@ async def registration_phone(message: Message, state: FSMContext):
 @router.message(F.text == "🏠 Главное меню")
 async def main_menu(message: Message, state: FSMContext):
     await state.clear()
+    # Убираем старую клавиатуру, затем показываем inline-меню
+    await message.answer("Клавиатура скрыта.", reply_markup=ReplyKeyboardRemove())
     await message.answer(
         "Главное меню:",
         reply_markup=get_main_menu_keyboard()
     )
-
-@router.message(F.text == "⬅️ Назад")
-async def go_back(message: Message, state: FSMContext):
-    current_state = await state.get_state()
-    
-    if current_state:
-        data = await state.get_data()
-        previous_menu = data.get('previous_menu', 'main')
-        
-        if previous_menu == 'copycenter':
-            from keyboards.copycenter import get_copycenter_main_keyboard
-            await message.answer("Раздел КОПИЦЕНТР:", reply_markup=get_copycenter_main_keyboard())
-        else:
-            await main_menu(message, state)
-    else:
-        await main_menu(message, state)
 
 @router.message(OrderStates.waiting_for_quantity, F.text.regexp(r'^\d+$'))
 async def quantity_entered(message: Message, state: FSMContext):
@@ -100,7 +87,7 @@ async def quantity_entered(message: Message, state: FSMContext):
     await state.set_state(OrderStates.waiting_for_files)
     await message.answer(
         "Теперь прикрепите файлы:",
-        # reply_markup=get_files_keyboard()
+        reply_markup=get_files_keyboard()
     )
 
 @router.message(OrderStates.waiting_for_files, F.text == "📎 Прикрепить файлы")
@@ -108,7 +95,7 @@ async def request_files(message: Message, state: FSMContext):
     await message.answer(
         "Пожалуйста, прикрепите файлы (документы или изображения):",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )
@@ -161,13 +148,13 @@ async def request_comment(message: Message, state: FSMContext):
         "Введите примечание к заказу:",
         reply_markup=ReplyKeyboardMarkup(
             keyboard=[[KeyboardButton(text="Пропустить")],
-                     [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+                     [KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )
 
 # ИСПРАВЛЕНИЕ: Добавить фильтр чтобы не срабатывал на кнопки
-@router.message(OrderStates.waiting_for_comment, ~F.text.in_(["Пропустить", "⬅️ Назад", "🏠 Главное меню", "✅ Отправить заказ-подтверждение"]))
+@router.message(OrderStates.waiting_for_comment, ~F.text.in_(["Пропустить", "🏠 Главное меню", "✅ Отправить заказ-подтверждение"]))
 async def comment_received(message: Message, state: FSMContext):
 	await state.update_data(comment=message.text)
 	
@@ -218,6 +205,9 @@ async def confirm_order(message: Message, state: FSMContext):
         data.get('files_data', [])
     )
     
+    # Перед показом главного меню убираем ReplyKeyboardMarkup
+    await message.answer("Клавиатура скрыта.", reply_markup=ReplyKeyboardRemove())
+    # Отправляем результат пользователю с inline-меню
     if success:
         await message.answer(
             "✅ Ваш заказ успешно отправлен менеджеру!\n"

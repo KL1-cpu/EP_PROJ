@@ -1,5 +1,5 @@
 from aiogram import Router, F
-from aiogram.types import Message
+from aiogram.types import Message, ReplyKeyboardRemove
 from aiogram.fsm.context import FSMContext
 
 from states.order_states import OrderStates
@@ -15,6 +15,8 @@ router = Router()
 async def polygraphy_main(message: Message, state: FSMContext):
     await state.set_state(OrderStates.waiting_for_files)
     await state.update_data(previous_menu='main')
+    # Убираем старую клавиатуру
+    await message.answer("Клавиатура скрыта.", reply_markup=ReplyKeyboardRemove())
     await message.answer(
         "Раздел ПОЛИГРАФИЯ. Выберите продукт:",
         reply_markup=get_polygraphy_main_keyboard()
@@ -166,7 +168,7 @@ async def notebook_pages_selected(message: Message, state: FSMContext):
     await message.answer(
         "Введите количество экземпляров:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )
@@ -215,7 +217,7 @@ async def booklet_fold_type_selected(message: Message, state: FSMContext):
     await message.answer(
         "Введите количество экземпляров:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )
@@ -237,7 +239,7 @@ async def calendar_type_selected(message: Message, state: FSMContext):
     await message.answer(
         "Введите количество экземпляров:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )
@@ -259,7 +261,7 @@ async def envelope_type_selected(message: Message, state: FSMContext):
     await message.answer(
         "Введите количество экземпляров:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )
@@ -309,3 +311,37 @@ async def sticker_packs_start(message: Message, state: FSMContext):
         "🔖 СТИКЕРЫ С ПЛОТТЕРНОЙ РЕЗКОЙ\n\nВыберите тип материала:",
         reply_markup=get_sticker_pack_material_keyboard()
     )
+
+@router.message(F.text == "✅ Отправить заказ-подтверждение")
+async def confirm_order(message: Message, state: FSMContext):
+    data = await state.get_data()
+    
+    order_message = create_order_message(
+        username=message.from_user.username,
+        user_id=message.from_user.id,
+        service_type=data.get('service_type', 'Неизвестная услуга'),
+        order_data=data,
+        files_info=data.get('files_info', []),
+        comment=data.get('comment')
+    )
+    
+    success = await send_order_to_manager(message.bot, order_message)
+    
+    # Скрываем старую клавиатуру и показываем inline-меню
+    await message.answer("Клавиатура скрыта.", reply_markup=ReplyKeyboardRemove())
+    await message.answer("Вот ваш заказ (копия):")
+    await message.answer(order_message)
+    
+    if success:
+        await message.answer(
+            "✅ Ваш заказ успешно отправлен менеджеру!\n"
+            "С вами свяжутся в ближайшее время для уточнения деталей.",
+            reply_markup=get_main_menu_keyboard()
+        )
+    else:
+        await message.answer(
+            "❌ Произошла ошибка при отправке заказа. Пожалуйста, попробуйте позже.",
+            reply_markup=get_main_menu_keyboard()
+        )
+    
+    await state.clear()

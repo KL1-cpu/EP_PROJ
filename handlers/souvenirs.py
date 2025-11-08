@@ -39,23 +39,23 @@ async def pen_material_selected(message: Message, state: FSMContext):
         reply_markup=get_pen_color_keyboard()
     )
 
-@router.message(OrderStates.pen_color)
-async def pen_color_selected(message: Message, state: FSMContext):
-    await state.update_data(color=message.text)
-    await state.set_state(OrderStates.pen_application)
-    await message.answer(
-        "Выберите способ нанесения:",
-        reply_markup=get_pen_application_keyboard()
-    )
+# @router.message(OrderStates.pen_color)
+# async def pen_color_selected(message: Message, state: FSMContext):
+#     await state.update_data(color=message.text)
+#     await state.set_state(OrderStates.pen_application)
+#     await message.answer(
+#         "Выберите способ нанесения:",
+#         reply_markup=get_pen_application_keyboard()
+#     )
 
-@router.message(OrderStates.pen_application)
+@router.message(OrderStates.pen_color)
 async def pen_application_selected(message: Message, state: FSMContext):
     await state.update_data(application=message.text)
     await state.set_state(OrderStates.waiting_for_quantity)
     await message.answer(
         "Введите количество экземпляров:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )
@@ -95,7 +95,7 @@ async def tshirt_print_position_selected(message: Message, state: FSMContext):
     await message.answer(
         "Введите количество экземпляров:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )
@@ -135,7 +135,7 @@ async def mug_packaging_selected(message: Message, state: FSMContext):
     await message.answer(
         "Введите количество экземпляров:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )

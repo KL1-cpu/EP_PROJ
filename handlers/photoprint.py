@@ -16,7 +16,7 @@ async def photoprint_start(message: Message, state: FSMContext):
     await state.update_data(service_type="Фотопечать", previous_menu='main')
     
     info_text = (
-        "📸 ФОТОПЕЧАТЬ\n\n"
+        "📸 ФОТОПЕЧАТЬ\ n\n"
         "ℹ️ Печать производится только на глянцевой бумаге\n\n"
         "Выберите формат бумаги:"
     )
@@ -39,7 +39,7 @@ async def photo_print_type_selected(message: Message, state: FSMContext):
     await message.answer(
         "Введите количество экземпляров:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )

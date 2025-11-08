@@ -4,8 +4,8 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 def get_packaging_main_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
-            [KeyboardButton(text="ПАКЕТЫ БУМАЖНЫЕ"), KeyboardButton(text="КОРОБКИ")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="ПАКЕТЫ"), KeyboardButton(text="КОРОБКИ")],
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )
@@ -15,7 +15,7 @@ def get_bag_type_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="Бумажные пакеты"), KeyboardButton(text="ПВД пакеты")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )
@@ -27,7 +27,7 @@ def get_bag_paper_print_keyboard():
             [KeyboardButton(text="Печать с одной стороны пакета")],
             [KeyboardButton(text="Печать с 2 сторон с одного макета")],
             [KeyboardButton(text="Печать с 2 сторон разные макеты")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )
@@ -40,7 +40,7 @@ def get_bag_paper_format_keyboard():
             [KeyboardButton(text="70×330×70 мм"), KeyboardButton(text="130×220×70 мм")],
             [KeyboardButton(text="120×140×70 мм"), KeyboardButton(text="210×210×100 мм")],
             [KeyboardButton(text="210×210×80 мм"), KeyboardButton(text="330×220×70 мм")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )
@@ -49,7 +49,7 @@ def get_bag_paper_lamination_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="Матовое"), KeyboardButton(text="Глянцевое")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )
@@ -58,7 +58,7 @@ def get_bag_paper_grommets_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="Золото"), KeyboardButton(text="Серебро")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )
@@ -69,7 +69,7 @@ def get_bag_paper_handle_keyboard():
             [KeyboardButton(text="Белые"), KeyboardButton(text="Чёрные")],
             [KeyboardButton(text="Красные"), KeyboardButton(text="Синие")],
             [KeyboardButton(text="Зелёные"), KeyboardButton(text="Жёлтые")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )
@@ -80,7 +80,7 @@ def get_bag_pvd_print_keyboard():
         keyboard=[
             [KeyboardButton(text="1+0"), KeyboardButton(text="1+1")],
             [KeyboardButton(text="2+0"), KeyboardButton(text="2+2")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )
@@ -90,7 +90,7 @@ def get_bag_pvd_format_keyboard():
         keyboard=[
             [KeyboardButton(text="20×30 см"), KeyboardButton(text="30×40 см")],
             [KeyboardButton(text="40×50 см"), KeyboardButton(text="50×60 см")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )
@@ -100,7 +100,7 @@ def get_box_material_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="Коробки из мелованного картона"), KeyboardButton(text="Коробки из микро-гофры")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )
@@ -110,7 +110,7 @@ def get_box_cardboard_print_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="Без печати"), KeyboardButton(text="Полноцветная печать")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )
@@ -123,7 +123,7 @@ def get_box_corrugated_format_keyboard():
             [KeyboardButton(text="180×55×55 мм"), KeyboardButton(text="360×150×50 мм")],
             [KeyboardButton(text="415×160×60 мм"), KeyboardButton(text="200×200×10 мм")],
             [KeyboardButton(text="Индивидуальный размер")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )
@@ -132,7 +132,7 @@ def get_box_corrugated_color_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="Белый"), KeyboardButton(text="Коричневый")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )
@@ -141,7 +141,7 @@ def get_box_corrugated_logo_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="Без нанесения"), KeyboardButton(text="С нанесением")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )

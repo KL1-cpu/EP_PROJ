@@ -5,7 +5,7 @@ def get_bw_format_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="A4"), KeyboardButton(text="A3")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )
@@ -15,7 +15,7 @@ def get_bw_print_type_keyboard():
         keyboard=[
             [KeyboardButton(text="Односторонняя"), KeyboardButton(text="Двусторонняя")],
             [KeyboardButton(text="Печать брошюры")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )
@@ -77,7 +77,7 @@ def get_copycenter_main_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="Ч/Б ПЕЧАТЬ"), KeyboardButton(text="ЦВЕТНАЯ ПЕЧАТЬ")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )
@@ -86,7 +86,7 @@ def get_files_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="📎 Прикрепить файлы")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )
@@ -96,7 +96,7 @@ def get_comment_keyboard():
         keyboard=[
             [KeyboardButton(text="📝 Добавить примечание")],
             [KeyboardButton(text="Пропустить")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )
@@ -105,7 +105,7 @@ def get_order_confirmation_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="✅ Отправить заказ-подтверждение")],
-            [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+            [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True
     )

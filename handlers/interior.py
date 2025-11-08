@@ -48,7 +48,7 @@ async def sign_type_selected(message: Message, state: FSMContext):
     await message.answer(
         "Введите размер таблички в формате Ш×В (мм):",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )

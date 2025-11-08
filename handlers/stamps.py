@@ -52,7 +52,7 @@ async def stamp_ink_color_selected(message: Message, state: FSMContext):
     await message.answer(
         "Введите количество экземпляров:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]], 
             resize_keyboard=True
         )
     )

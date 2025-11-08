@@ -1,5 +1,5 @@
 from aiogram import Router, F
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove
 from aiogram.fsm.context import FSMContext
 
 from states.order_states import OrderStates
@@ -21,7 +21,7 @@ async def packaging_main(message: Message, state: FSMContext):
     )
 
 # ПАКЕТЫ БУМАЖНЫЕ
-@router.message(F.text == "ПАКЕТЫ БУМАЖНЫЕ")
+@router.message(F.text == "ПАКЕТЫ")
 async def bags_start(message: Message, state: FSMContext):
     await state.set_state(OrderStates.bag_type)
     await state.update_data(service_type="Пакеты", previous_menu='packaging')
@@ -83,7 +83,7 @@ async def paper_bags_handle_selected(message: Message, state: FSMContext):
     await message.answer(
         "Введите количество экземпляров:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )
@@ -114,7 +114,7 @@ async def pvd_bags_format_selected(message: Message, state: FSMContext):
     await message.answer(
         "Введите количество экземпляров:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )
@@ -137,7 +137,7 @@ async def cardboard_boxes_selected(message: Message, state: FSMContext):
     await message.answer(
         "Введите размеры коробки в формате Д×Ш×В (мм):",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )
@@ -167,7 +167,7 @@ async def cardboard_boxes_lamination_selected(message: Message, state: FSMContex
     await message.answer(
         "Введите количество экземпляров:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )
@@ -207,7 +207,7 @@ async def corrugated_boxes_logo_selected(message: Message, state: FSMContext):
     await message.answer(
         "Введите количество экземпляров:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )
@@ -225,8 +225,9 @@ async def confirm_order(callback: CallbackQuery, state: FSMContext):
     )
     success = await send_order_to_manager(callback.bot, order_message)
     
-    # Отправляем пользователю копию заказа
+    # Убираем старую ReplyKeyboard, затем отправляем пользователю сводку и финальное сообщение с inline-меню
     await callback.answer()
+    await callback.message.answer("Клавиатура скрыта.", reply_markup=ReplyKeyboardRemove())
     await callback.message.answer("Вот ваш заказ (копия):")
     await callback.message.answer(order_message)
     

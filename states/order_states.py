@@ -172,7 +172,7 @@ async def request_files(message: Message, state: FSMContext):
     await message.answer(
         "Пожалуйста, прикрепите файлы (документы или изображения):",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )
@@ -203,20 +203,20 @@ async def files_received(message: Message, state: FSMContext):
                 [KeyboardButton(text="📎 Прикрепить еще файлы")],
                 [KeyboardButton(text="📝 Добавить примечание")],
                 [KeyboardButton(text="✅ Отправить заказ-подтверждение")],
-                [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]
+                [KeyboardButton(text="🏠 Главное меню")]
             ],
             resize_keyboard=True
         )
     )
 
-@router.message(OrderStates.waiting_for_files, F.text == "📝 Добавить примечание")
+@router.message(OrderStates.waiting_for_comment)
 async def request_comment(message: Message, state: FSMContext):
     await state.set_state(OrderStates.waiting_for_comment)
     await message.answer(
         "Введите примечание к заказу:",
         reply_markup=ReplyKeyboardMarkup(
             keyboard=[[KeyboardButton(text="Пропустить")],
-                     [KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+                     [KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )

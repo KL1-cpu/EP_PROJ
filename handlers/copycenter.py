@@ -1,5 +1,5 @@
 from aiogram import Router, F
-from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 from aiogram.fsm.context import FSMContext
 
 from states.order_states import OrderStates
@@ -25,6 +25,8 @@ router = Router()
 async def copycenter_main(message: Message, state: FSMContext):
     await state.set_state(OrderStates.waiting_for_files)
     await state.update_data(previous_menu='main')
+    # Убираем старую клавиатуру перед показом inline-меню
+    await message.answer("Клавиатура скрыта.", reply_markup=ReplyKeyboardRemove())
     await message.answer(
         "Раздел КОПИЦЕНТР. Выберите тип печати:",
         reply_markup=get_copycenter_main_keyboard()
@@ -78,7 +80,7 @@ async def bw_additional_services_selected(message: Message, state: FSMContext):
     await message.answer(
         "Введите количество экземпляров:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )
@@ -123,7 +125,7 @@ async def color_additional_services_selected(message: Message, state: FSMContext
     await message.answer(
         "Введите количество экземпляров:",
         reply_markup=ReplyKeyboardMarkup(
-            keyboard=[[KeyboardButton(text="⬅️ Назад"), KeyboardButton(text="🏠 Главное меню")]],
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
             resize_keyboard=True
         )
     )
@@ -215,7 +217,8 @@ async def confirm_order(message: Message, state: FSMContext):
     # Отправляем менеджеру
     success = await send_order_to_manager(message.bot, order_message)
     
-    # Отправляем пользователю копию заказа
+    # Убираем старую клавиатуру и показываем inline главное меню вместе с результатом
+    await message.answer("Клавиатура скрыта.", reply_markup=ReplyKeyboardRemove())
     await message.answer("Вот ваш заказ (копия):")
     await message.answer(order_message)
     
