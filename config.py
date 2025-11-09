@@ -5,7 +5,7 @@ load_dotenv()
 
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 # ИЗМЕНЕНИЕ: отправляем по ID вместо username
-RECIPIENT_ID = 627160379  # ID получателя
-
+RECIPIENT_ID = 5779051026  # ID получателя
+                
 if not BOT_TOKEN:
     raise ValueError("BOT_TOKEN не найден в переменных окружения")

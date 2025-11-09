@@ -15,6 +15,7 @@ router = Router()
 async def cmd_start(message: Message, state: FSMContext, bot):
     await state.clear()
     user = get_user_info(message.from_user.id)
+    
 
     # try:
     #     await message.answer_photo(photo=FSInputFile("start_pic.jpg"))
@@ -26,7 +27,7 @@ async def cmd_start(message: Message, state: FSMContext, bot):
         # await message.answer("Клавиатура скрыта.", reply_markup=ReplyKeyboardRemove())
         await message.answer_photo(
                 photo=FSInputFile("start_pic.jpg"),
-                caption="Привет! Я твой личный помощник Лия!\n"
+                caption='Привет! Я твой личный помощник Лия!\n'
                         "Данные пользователя сохранены. Выберите раздел:",
                 reply_markup=get_main_menu_keyboard()
         )
@@ -36,6 +37,9 @@ async def cmd_start(message: Message, state: FSMContext, bot):
         await message.answer(
             "Здравствуйте! Перед началом работы, пожалуйста, укажите вашу фамилию:"
         )
+        
+
+
 
 # Регистрация — фамилия
 @router.message(OrderStates.registration_last_name)
