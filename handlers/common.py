@@ -1,5 +1,5 @@
 from aiogram import Router, F
-from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton, CallbackQuery, ReplyKeyboardRemove
+from aiogram.types import Message, FSInputFile, ReplyKeyboardMarkup, KeyboardButton, CallbackQuery, ReplyKeyboardRemove
 from aiogram.fsm.context import FSMContext
 from aiogram.filters import Command
 
@@ -12,16 +12,23 @@ from utils.user_store import get_user_info, set_user_info  # <-- new
 router = Router()
 
 @router.message(Command("start"))
-async def cmd_start(message: Message, state: FSMContext):
+async def cmd_start(message: Message, state: FSMContext, bot):
     await state.clear()
     user = get_user_info(message.from_user.id)
+
+    # try:
+    #     await message.answer_photo(photo=FSInputFile("start_pic.jpg"))
+    # except Exception as e:
+    #     print(f"Не удалось отправить фото: {e}")
+
     if user:
         # Убираем старую клавиатуру, затем показываем inline-меню
-        await message.answer("Клавиатура скрыта.", reply_markup=ReplyKeyboardRemove())
-        await message.answer(
-            "Привет! Я твой личный помощник Лия!\n"
-            "Данные пользователя сохранены. Выберите раздел:",
-            reply_markup=get_main_menu_keyboard()
+        # await message.answer("Клавиатура скрыта.", reply_markup=ReplyKeyboardRemove())
+        await message.answer_photo(
+                photo=FSInputFile("start_pic.jpg"),
+                caption="Привет! Я твой личный помощник Лия!\n"
+                        "Данные пользователя сохранены. Выберите раздел:",
+                reply_markup=get_main_menu_keyboard()
         )
     else:
         # Начать регистрацию: попросить фамилию
@@ -75,7 +82,7 @@ async def registration_phone(message: Message, state: FSMContext):
 async def main_menu(message: Message, state: FSMContext):
     await state.clear()
     # Убираем старую клавиатуру, затем показываем inline-меню
-    await message.answer("Клавиатура скрыта.", reply_markup=ReplyKeyboardRemove())
+    await message.answer("Идёт загрузка...", reply_markup=ReplyKeyboardRemove())
     await message.answer(
         "Главное меню:",
         reply_markup=get_main_menu_keyboard()
@@ -206,7 +213,7 @@ async def confirm_order(message: Message, state: FSMContext):
     )
     
     # Перед показом главного меню убираем ReplyKeyboardMarkup
-    await message.answer("Клавиатура скрыта.", reply_markup=ReplyKeyboardRemove())
+    await message.answer("Идёт загрузка...", reply_markup=ReplyKeyboardRemove())
     # Отправляем результат пользователю с inline-меню
     if success:
         await message.answer(
