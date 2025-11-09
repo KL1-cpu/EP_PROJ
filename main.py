@@ -11,6 +11,7 @@ from handlers.interior import router as interior_router
 from handlers.souvenirs import router as souvenirs_router
 from handlers.stamps import router as stamps_router
 from handlers.photoprint import router as photoprint_router
+from handlers.order_confirmation import router as order_confirmation_router
 
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)
@@ -29,6 +30,7 @@ async def main():
     dp.include_router(souvenirs_router)
     dp.include_router(stamps_router)
     dp.include_router(photoprint_router)
+    dp.include_router(order_confirmation_router)
     
     # Запуск бота
     await dp.start_polling(bot)

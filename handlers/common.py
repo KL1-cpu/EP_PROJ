@@ -218,13 +218,30 @@ async def confirm_order(message: Message, state: FSMContext):
     
     # Перед показом главного меню убираем ReplyKeyboardMarkup
     await message.answer("Идёт загрузка...", reply_markup=ReplyKeyboardRemove())
-    # Отправляем результат пользователю с inline-меню
+    
     if success:
-        await message.answer(
+        # Сохраняем ID пользователя
+        user_id = message.from_user.id
+        
+        # Отправляем сообщение с клавиатурой главного меню
+        sent_message = await message.answer(
             "✅ Ваш заказ успешно отправлен менеджеру!\n"
-            "С вами свяжутся в ближайшее время для уточнения деталей.",
+            "Ожидайте уведомления о принятии заказа в работу...\n",
             reply_markup=get_main_menu_keyboard()
         )
+        
+        # Сохраняем ID сообщения для последующего удаления
+        # Используем глобальное хранилище или временное решение
+        from utils.user_store import set_user_info, get_user_info
+        user_data = get_user_info(user_id) or {}
+        user_data["last_confirmation_message_id"] = sent_message.message_id
+        # Сохраняем обратно в user_store
+        set_user_info(user_id, 
+                     user_data.get("last_name", ""), 
+                     user_data.get("first_name", ""), 
+                     user_data.get("phone", ""),
+                     extra_data=user_data)  # Нужно будет обновить функцию set_user_info
+        
     else:
         await message.answer(
             "❌ Произошла ошибка при отправке заказа. Пожалуйста, попробуйте позже.",

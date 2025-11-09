@@ -276,7 +276,7 @@ async def confirm_order(message: Message, state: FSMContext):
     if success:
         await message.answer(
             "✅ Ваш заказ успешно отправлен менеджеру!\n"
-            "С вами свяжутся в ближайшее время для уточнения деталей.",
+            "Ожидайте уведомления о принятии заказа в работу...",
             reply_markup=get_main_menu_keyboard()
         )
     else:

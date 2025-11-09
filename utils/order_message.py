@@ -2,6 +2,7 @@ from datetime import datetime
 from aiogram.types import Message
 from config import RECIPIENT_ID
 from utils.user_store import get_user_info  # <-- new
+from keyboards.order_message_buttons import get_confirm_keyboard 
 
 def create_order_message(
     username: str,
@@ -30,7 +31,7 @@ def create_order_message(
         message += "\n"
 
     message += f"👤 Пользователь: @{username if username else 'без username'}\n"
-    # message += f"🆔 ID: {user_id}\n"
+    message += f"🆔 ID: {user_id}\n"
     message += f"📋 Тип услуги: {service_type}\n"
     message += f"🕒 Время заказа: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
     
@@ -89,13 +90,13 @@ async def send_order_to_manager(bot, order_message: str, files_data: list = None
                 await bot.send_document(
                     chat_id=RECIPIENT_ID,
                     document=file_data['file_id'],
-                    caption=order_message
+                    caption=order_message, reply_markup = get_confirm_keyboard()
                 )
             elif file_data['type'] == 'photo':
                 await bot.send_photo(
                     chat_id=RECIPIENT_ID,
                     photo=file_data['file_id'],
-                    caption=order_message
+                    caption=order_message, reply_markup = get_confirm_keyboard()
                 )
             
             # Остальные файлы отправляем без подписи
@@ -103,16 +104,16 @@ async def send_order_to_manager(bot, order_message: str, files_data: list = None
                 if file_data['type'] == 'document':
                     await bot.send_document(
                         chat_id=RECIPIENT_ID,
-                        document=file_data['file_id']
+                        document=file_data['file_id'], reply_markup = get_confirm_keyboard()
                     )
                 elif file_data['type'] == 'photo':
                     await bot.send_photo(
                         chat_id=RECIPIENT_ID,
-                        photo=file_data['file_id']
+                        photo=file_data['file_id'], reply_markup = get_confirm_keyboard()
                     )
         else:
             # Если файлов нет, отправляем просто текстовое сообщение
-            await bot.send_message(chat_id=RECIPIENT_ID, text=order_message)
+            await bot.send_message(chat_id=RECIPIENT_ID, text=order_message, reply_markup = get_confirm_keyboard())
         
         return True
     except Exception as e:
