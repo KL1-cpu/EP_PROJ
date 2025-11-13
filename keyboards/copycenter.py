@@ -68,11 +68,51 @@ def get_color_additional_services_keyboard():
         resize_keyboard=True
     )
 
-# Общие клавиатуры для копицентра
+# Главное меню копицентра (обновленное)
 def get_copycenter_main_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="Ч/Б ПЕЧАТЬ"), KeyboardButton(text="ЦВЕТНАЯ ПЕЧАТЬ")],
+            [KeyboardButton(text="РИЗОГРАФ")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+# Ризограф
+def get_risograph_format_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="A4"), KeyboardButton(text="А3")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+def get_risograph_quantity_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="500"), KeyboardButton(text="1000"), KeyboardButton(text="1500")],
+            [KeyboardButton(text="2000"), KeyboardButton(text="3000"), KeyboardButton(text="5000")],
+            [KeyboardButton(text="10000")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+def get_risograph_color_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Черный"), KeyboardButton(text="Красный"), KeyboardButton(text="Черный/Красный")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+def get_risograph_print_type_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Односторонняя"), KeyboardButton(text="Двухсторонний")],
             [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True

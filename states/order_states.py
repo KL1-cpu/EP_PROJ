@@ -156,6 +156,32 @@ class OrderStates(StatesGroup):
     registration_first_name = State()
     registration_phone = State()
 
+    # Копицентр - Ризограф
+    risograph_format = State()
+    risograph_quantity = State()
+    risograph_color = State()
+    risograph_print_type = State()
+    
+    # Полиграфия - Тетради
+    notebook_school_format = State()
+    notebook_school_stitching_position = State()
+    notebook_school_binding_type = State()
+    notebook_school_cover_type = State()
+    notebook_school_cover_print = State()
+    notebook_school_backing_print = State()
+    notebook_school_inner_block = State()
+    notebook_school_inner_print = State()
+    
+    # Полиграфия - Каталоги
+    catalog_format = State()
+    catalog_stitching_position = State()
+    catalog_binding_type = State()
+    catalog_cover_type = State()
+    catalog_cover_print = State()
+    catalog_backing_print = State()
+    catalog_inner_block = State()
+    catalog_inner_print = State()
+
 # Добавить в конец файла states/order_states.py
 
 @router.message(OrderStates.waiting_for_quantity, F.text.regexp(r'^\d+$'))

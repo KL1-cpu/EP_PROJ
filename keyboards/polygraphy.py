@@ -1,14 +1,186 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-# Главное меню полиграфии
+# Главное меню полиграфии (обновленное)
 def get_polygraphy_main_keyboard():
     return ReplyKeyboardMarkup(
         keyboard=[
             [KeyboardButton(text="ВИЗИТКИ"), KeyboardButton(text="БЛОКНОТЫ")],
             [KeyboardButton(text="БУКЛЕТЫ"), KeyboardButton(text="КАЛЕНДАРИ")],
-            [KeyboardButton(text="КОНВЕРТЫ"), KeyboardButton(text="ЛИСТОВКИ")],
+            [KeyboardButton(text="КАТАЛОГИ"), KeyboardButton(text="КОНВЕРТЫ")],
+            [KeyboardButton(text="ЛИСТОВКИ"), KeyboardButton(text="ТЕТРАДИ")],
             [KeyboardButton(text="ПЕЧАТЬ НА САМОКЛЕЙКЕ"), KeyboardButton(text="ПЛАКАТЫ")],
             [KeyboardButton(text="СЕРТИФИКАТЫ"), KeyboardButton(text="СТИКЕРЫ С ПЛОТТЕРНОЙ РЕЗКОЙ")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+# ТЕТРАДИ
+def get_notebook_school_format_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="A6"), KeyboardButton(text="A5")],
+            [KeyboardButton(text="A4"), KeyboardButton(text="А3")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+def get_notebook_school_stitching_position_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="По короткому краю"), KeyboardButton(text="По длинному краю")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+def get_notebook_school_binding_type_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Пружина"), KeyboardButton(text="Скрепка")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+def get_notebook_school_cover_type_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Офсетная 80 г/м²")],
+            [KeyboardButton(text="Мелованная бумага 115 г/м²"), KeyboardButton(text="Мелованная бумага 130 г/м²")],
+            [KeyboardButton(text="Мелованная бумага 150 г/м²"), KeyboardButton(text="Мелованная бумага 170 г/м²")],
+            [KeyboardButton(text="Мелованная бумага 250 г/м²"), KeyboardButton(text="Мелованная бумага 300 г/м²")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+def get_notebook_school_cover_print_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Печать ч/б односторонняя (1+0) только для ВХИ 80гр.")],
+            [KeyboardButton(text="Печать ч/б двухсторонняя (1+1) только для ВХИ 80гр.")],
+            [KeyboardButton(text="Цветная односторонняя (4+0)"), KeyboardButton(text="Цветная двухсторонняя (4+4)")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+def get_notebook_school_backing_print_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Печать ч/б односторонняя (1+0) только для ВХИ 80гр.")],
+            [KeyboardButton(text="Печать ч/б двухсторонняя (1+1) только для ВХИ 80гр.")],
+            [KeyboardButton(text="Цветная односторонняя (4+0)"), KeyboardButton(text="Цветная двухсторонняя (4+4)")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+def get_notebook_school_inner_block_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Офсетная 80 г/м²")],
+            [KeyboardButton(text="Мелованная бумага 115 г/м²"), KeyboardButton(text="Мелованная бумага 130 г/м²")],
+            [KeyboardButton(text="Мелованная бумага 150 г/м²"), KeyboardButton(text="Мелованная бумага 170 г/м²")],
+            [KeyboardButton(text="Мелованная бумага 250 г/м²")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+def get_notebook_school_inner_print_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Печать ч/б односторонняя (1+0) только для ВХИ 80гр.")],
+            [KeyboardButton(text="Печать ч/б двухсторонняя (1+1) только для ВХИ 80гр.")],
+            [KeyboardButton(text="Цветная односторонняя (4+0)"), KeyboardButton(text="Цветная двухсторонняя (4+4)")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+# КАТАЛОГИ
+def get_catalog_format_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="A5"), KeyboardButton(text="A4"), KeyboardButton(text="А3")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+def get_catalog_stitching_position_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="По короткому краю"), KeyboardButton(text="По длинному краю")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+def get_catalog_binding_type_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Пружина"), KeyboardButton(text="Скрепка")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+def get_catalog_cover_type_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Офсетная 80 г/м²")],
+            [KeyboardButton(text="Мелованная бумага 115 г/м²"), KeyboardButton(text="Мелованная бумага 130 г/м²")],
+            [KeyboardButton(text="Мелованная бумага 150 г/м²"), KeyboardButton(text="Мелованная бумага 170 г/м²")],
+            [KeyboardButton(text="Мелованная бумага 250 г/м²"), KeyboardButton(text="Мелованная бумага 300 г/м²")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+def get_catalog_cover_print_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Печать ч/б односторонняя (1+0) только для ВХИ 80гр.")],
+            [KeyboardButton(text="Печать ч/б двухсторонняя (1+1) только для ВХИ 80гр.")],
+            [KeyboardButton(text="Цветная односторонняя (4+0)"), KeyboardButton(text="Цветная двухсторонняя (4+4)")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+def get_catalog_backing_print_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Печать ч/б односторонняя (1+0) только для ВХИ 80гр.")],
+            [KeyboardButton(text="Печать ч/б двухсторонняя (1+1) только для ВХИ 80гр.")],
+            [KeyboardButton(text="Цветная односторонняя (4+0)"), KeyboardButton(text="Цветная двухсторонняя (4+4)")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+def get_catalog_inner_block_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Офсетная 80 г/м²")],
+            [KeyboardButton(text="Мелованная бумага 115 г/м²"), KeyboardButton(text="Мелованная бумага 130 г/м²")],
+            [KeyboardButton(text="Мелованная бумага 150 г/м²"), KeyboardButton(text="Мелованная бумага 170 г/м²")],
+            [KeyboardButton(text="Мелованная бумага 250 г/м²")],
+            [KeyboardButton(text="🏠 Главное меню")]
+        ],
+        resize_keyboard=True
+    )
+
+def get_catalog_inner_print_keyboard():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="Печать ч/б односторонняя (1+0) только для ВХИ 80гр.")],
+            [KeyboardButton(text="Печать ч/б двухсторонняя (1+1) только для ВХИ 80гр.")],
+            [KeyboardButton(text="Цветная односторонняя (4+0)"), KeyboardButton(text="Цветная двухсторонняя (4+4)")],
             [KeyboardButton(text="🏠 Главное меню")]
         ],
         resize_keyboard=True

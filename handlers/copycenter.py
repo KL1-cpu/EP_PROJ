@@ -14,7 +14,11 @@ from keyboards.copycenter import (
     get_color_additional_services_keyboard,
     get_files_keyboard,
     get_comment_keyboard,
-    get_order_confirmation_keyboard
+    get_order_confirmation_keyboard,
+    get_risograph_format_keyboard,
+    get_risograph_quantity_keyboard,
+    get_risograph_color_keyboard,
+    get_risograph_print_type_keyboard
 )
 from utils.order_message import create_order_message, send_order_to_manager, create_order_summary  # <-- added
 
@@ -235,3 +239,49 @@ async def confirm_order(message: Message, state: FSMContext):
         )
     
     await state.clear()
+
+# РИЗОГРАФ
+@router.message(F.text == "РИЗОГРАФ")
+async def risograph_start(message: Message, state: FSMContext):
+    await state.set_state(OrderStates.risograph_format)
+    await state.update_data(Услуга="Ризограф", previous_menu='copycenter')
+    await message.answer(
+        "🖨️ РИЗОГРАФ\n\nВыберите формат:",
+        reply_markup=get_risograph_format_keyboard()
+    )
+
+@router.message(OrderStates.risograph_format, F.text.in_(["A4", "А3"]))
+async def risograph_format_selected(message: Message, state: FSMContext):
+    await state.update_data(Формат=message.text)
+    await state.set_state(OrderStates.risograph_quantity)
+    await message.answer(
+        "Выберите количество экземпляров:",
+        reply_markup=get_risograph_quantity_keyboard()
+    )
+
+@router.message(OrderStates.risograph_quantity)
+async def risograph_quantity_selected(message: Message, state: FSMContext):
+    await state.update_data(Количество=message.text)
+    await state.set_state(OrderStates.risograph_color)
+    await message.answer(
+        "Выберите цвет печати:",
+        reply_markup=get_risograph_color_keyboard()
+    )
+
+@router.message(OrderStates.risograph_color)
+async def risograph_color_selected(message: Message, state: FSMContext):
+    await state.update_data(Цвет=message.text)
+    await state.set_state(OrderStates.risograph_print_type)
+    await message.answer(
+        "Выберите тип печати:",
+        reply_markup=get_risograph_print_type_keyboard()
+    )
+
+@router.message(OrderStates.risograph_print_type)
+async def risograph_print_type_selected(message: Message, state: FSMContext):
+    await state.update_data(Тип_печати=message.text)
+    await state.set_state(OrderStates.waiting_for_files)
+    await message.answer(
+        "Теперь прикрепите файлы для печати:",
+        reply_markup=get_files_keyboard()
+    )

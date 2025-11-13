@@ -6,7 +6,6 @@ from states.order_states import OrderStates
 from keyboards.main_menu import get_main_menu_keyboard
 from keyboards.polygraphy import *
 from keyboards.copycenter import get_files_keyboard, get_comment_keyboard, get_order_confirmation_keyboard
-from utils.order_message import create_order_message, send_order_to_manager
 
 router = Router()
 
@@ -540,3 +539,173 @@ async def sticker_pack_type_selected(message: Message, state: FSMContext):
 #         )
     
 #     await state.clear()
+
+# ТЕТРАДИ
+@router.message(F.text == "ТЕТРАДИ")
+async def notebooks_school_start(message: Message, state: FSMContext):
+    await state.set_state(OrderStates.notebook_school_format)
+    await state.update_data(Услуга="Тетради", previous_menu='polygraphy')
+    await message.answer(
+        "📚 ТЕТРАДИ\n\nВыберите формат:",
+        reply_markup=get_notebook_school_format_keyboard()
+    )
+
+@router.message(OrderStates.notebook_school_format)
+async def notebook_school_format_selected(message: Message, state: FSMContext):
+    await state.update_data(Формат=message.text)
+    await state.set_state(OrderStates.notebook_school_stitching_position)
+    await message.answer(
+        "Выберите позицию сшивания:",
+        reply_markup=get_notebook_school_stitching_position_keyboard()
+    )
+
+@router.message(OrderStates.notebook_school_stitching_position)
+async def notebook_school_stitching_selected(message: Message, state: FSMContext):
+    await state.update_data(Позиция_сшивания=message.text)
+    await state.set_state(OrderStates.notebook_school_binding_type)
+    await message.answer(
+        "Выберите тип скрепления:",
+        reply_markup=get_notebook_school_binding_type_keyboard()
+    )
+
+@router.message(OrderStates.notebook_school_binding_type)
+async def notebook_school_binding_selected(message: Message, state: FSMContext):
+    await state.update_data(Тип_скрепления=message.text)
+    await state.set_state(OrderStates.notebook_school_cover_type)
+    await message.answer(
+        "Выберите тип обложки/подложки:",
+        reply_markup=get_notebook_school_cover_type_keyboard()
+    )
+
+@router.message(OrderStates.notebook_school_cover_type)
+async def notebook_school_cover_selected(message: Message, state: FSMContext):
+    await state.update_data(Тип_обложки=message.text)
+    await state.set_state(OrderStates.notebook_school_cover_print)
+    await message.answer(
+        "Выберите обложка печать:",
+        reply_markup=get_notebook_school_cover_print_keyboard()
+    )
+
+@router.message(OrderStates.notebook_school_cover_print)
+async def notebook_school_cover_print_selected(message: Message, state: FSMContext):
+    await state.update_data(Обложка_печать=message.text)
+    await state.set_state(OrderStates.notebook_school_backing_print)
+    await message.answer(
+        "Выберите подложка печать:",
+        reply_markup=get_notebook_school_backing_print_keyboard()
+    )
+
+@router.message(OrderStates.notebook_school_backing_print)
+async def notebook_school_backing_print_selected(message: Message, state: FSMContext):
+    await state.update_data(Подложка_печать=message.text)
+    await state.set_state(OrderStates.notebook_school_inner_block)
+    await message.answer(
+        "Выберите внутренний блок:",
+        reply_markup=get_notebook_school_inner_block_keyboard()
+    )
+
+@router.message(OrderStates.notebook_school_inner_block)
+async def notebook_school_inner_block_selected(message: Message, state: FSMContext):
+    await state.update_data(Внутренний_блок=message.text)
+    await state.set_state(OrderStates.notebook_school_inner_print)
+    await message.answer(
+        "Выберите внутренний блок печать:",
+        reply_markup=get_notebook_school_inner_print_keyboard()
+    )
+
+@router.message(OrderStates.notebook_school_inner_print)
+async def notebook_school_inner_print_selected(message: Message, state: FSMContext):
+    await state.update_data(Внутренний_блок_печать=message.text)
+    await state.set_state(OrderStates.waiting_for_quantity)
+    await message.answer(
+        "Введите количество экземпляров:",
+        reply_markup=ReplyKeyboardMarkup(
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
+            resize_keyboard=True
+        )
+    )
+
+# КАТАЛОГИ
+@router.message(F.text == "КАТАЛОГИ")
+async def catalogs_start(message: Message, state: FSMContext):
+    await state.set_state(OrderStates.catalog_format)
+    await state.update_data(Услуга="Каталоги", previous_menu='polygraphy')
+    await message.answer(
+        "📖 КАТАЛОГИ\n\nВыберите формат:",
+        reply_markup=get_catalog_format_keyboard()
+    )
+
+@router.message(OrderStates.catalog_format)
+async def catalog_format_selected(message: Message, state: FSMContext):
+    await state.update_data(Формат=message.text)
+    await state.set_state(OrderStates.catalog_stitching_position)
+    await message.answer(
+        "Выберите позицию сшивания:",
+        reply_markup=get_catalog_stitching_position_keyboard()
+    )
+
+@router.message(OrderStates.catalog_stitching_position)
+async def catalog_stitching_selected(message: Message, state: FSMContext):
+    await state.update_data(Позиция_сшивания=message.text)
+    await state.set_state(OrderStates.catalog_binding_type)
+    await message.answer(
+        "Выберите тип скрепления:",
+        reply_markup=get_catalog_binding_type_keyboard()
+    )
+
+@router.message(OrderStates.catalog_binding_type)
+async def catalog_binding_selected(message: Message, state: FSMContext):
+    await state.update_data(Тип_скрепления=message.text)
+    await state.set_state(OrderStates.catalog_cover_type)
+    await message.answer(
+        "Выберите тип обложки/подложки:",
+        reply_markup=get_catalog_cover_type_keyboard()
+    )
+
+@router.message(OrderStates.catalog_cover_type)
+async def catalog_cover_selected(message: Message, state: FSMContext):
+    await state.update_data(Тип_обложки=message.text)
+    await state.set_state(OrderStates.catalog_cover_print)
+    await message.answer(
+        "Выберите обложка печать:",
+        reply_markup=get_catalog_cover_print_keyboard()
+    )
+
+@router.message(OrderStates.catalog_cover_print)
+async def catalog_cover_print_selected(message: Message, state: FSMContext):
+    await state.update_data(Обложка_печать=message.text)
+    await state.set_state(OrderStates.catalog_backing_print)
+    await message.answer(
+        "Выберите подложка печать:",
+        reply_markup=get_catalog_backing_print_keyboard()
+    )
+
+@router.message(OrderStates.catalog_backing_print)
+async def catalog_backing_print_selected(message: Message, state: FSMContext):
+    await state.update_data(Подложка_печать=message.text)
+    await state.set_state(OrderStates.catalog_inner_block)
+    await message.answer(
+        "Выберите внутренний блок:",
+        reply_markup=get_catalog_inner_block_keyboard()
+    )
+
+@router.message(OrderStates.catalog_inner_block)
+async def catalog_inner_block_selected(message: Message, state: FSMContext):
+    await state.update_data(Внутренний_блок=message.text)
+    await state.set_state(OrderStates.catalog_inner_print)
+    await message.answer(
+        "Выберите внутренний блок печать:",
+        reply_markup=get_catalog_inner_print_keyboard()
+    )
+
+@router.message(OrderStates.catalog_inner_print)
+async def catalog_inner_print_selected(message: Message, state: FSMContext):
+    await state.update_data(Внутренний_блок_печать=message.text)
+    await state.set_state(OrderStates.waiting_for_quantity)
+    await message.answer(
+        "Введите количество экземпляров:",
+        reply_markup=ReplyKeyboardMarkup(
+            keyboard=[[KeyboardButton(text="🏠 Главное меню")]],
+            resize_keyboard=True
+        )
+    )
